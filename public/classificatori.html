@@ -1,0 +1,37 @@
+<div style="width: 100%; max-width: 440px; font-family: system-ui, -apple-system, sans-serif;">
+    <h3 style="margin: 0 0 12px; color: #1a1a1a; font-size: 18px;">Quiz Classificatori Cinesi (量词 - Liàngcí)</h3>
+    <p style="color: #666; font-size: 14px; margin-bottom: 20px;">Qual è il classificatore adatto per ogni categoria di oggetti?</p>
+
+    <div style="background: #f8f9fa; padding: 16px; border-radius: 10px; border: 1px solid #e5e5e5; margin-bottom: 16px;">
+        <p style="font-weight: 600; margin: 0 0 10px; font-size: 15px;">Quale classificatore si usa per i libri (书 - shū)?</p>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+            <button class="ex-btn" onclick="checkEx(this, true)" style="padding: 10px 14px; background: white; border: 1px solid #ddd; border-radius: 8px; text-align: left; cursor: pointer; font-size: 14px;">A) 本 (běn) → 一本书 (Un libro)</button>
+            <button class="ex-btn" onclick="checkEx(this, false)" style="padding: 10px 14px; background: white; border: 1px solid #ddd; border-radius: 8px; text-align: left; cursor: pointer; font-size: 14px;">B) 只 (zhī) → per animali piccoli</button>
+            <button class="ex-btn" onclick="checkEx(this, false)" style="padding: 10px 14px; background: white; border: 1px solid #ddd; border-radius: 8px; text-align: left; cursor: pointer; font-size: 14px;">C) 张 (zhāng) → per superfici piatte</button>
+        </div>
+        <div class="feedback" style="margin-top: 8px; font-size: 13px; font-weight: 600; display: none;"></div>
+    </div>
+</div>
+
+<script>
+function checkEx(btn, isCorrect) {
+    const parent = btn.parentElement;
+    const fb = parent.nextElementSibling;
+    parent.querySelectorAll('.ex-btn').forEach(b => {
+        b.style.borderColor = '#ddd';
+        b.style.background = 'white';
+    });
+    fb.style.display = 'block';
+    if (isCorrect) {
+        btn.style.borderColor = '#00dc64';
+        btn.style.background = '#e6fbee';
+        fb.style.color = '#00b34e';
+        fb.innerText = 'Esatto! 本 (běn) è il classificatore specifico per volumi, libri e riviste.';
+    } else {
+        btn.style.borderColor = '#e53e3e';
+        btn.style.background = '#fff5f5';
+        fb.style.color = '#e53e3e';
+        fb.innerText = 'Non è corretto, riprova!';
+    }
+}
+</script>

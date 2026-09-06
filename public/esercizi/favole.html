@@ -1,0 +1,37 @@
+<div style="width: 100%; max-width: 440px; font-family: system-ui, -apple-system, sans-serif;">
+    <h3 style="margin: 0 0 12px; color: #1a1a1a; font-size: 18px;">Esercizio Frasi: Favole (童话故事)</h3>
+    <p style="color: #666; font-size: 14px; margin-bottom: 20px;">Scegli la parola corretta per completare la frase.</p>
+
+    <div style="background: #f8f9fa; padding: 16px; border-radius: 10px; border: 1px solid #e5e5e5; margin-bottom: 16px;">
+        <p style="font-weight: 600; margin: 0 0 10px; font-size: 15px;">Completa la frase: "从前，有 ___ 只小白兔..." (C'era una volta, un coniglietto...)</p>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+            <button class="ex-btn" onclick="checkEx(this, true)" style="padding: 10px 14px; background: white; border: 1px solid #ddd; border-radius: 8px; text-align: left; cursor: pointer; font-size: 14px;">A) 一 (yī - uno)</button>
+            <button class="ex-btn" onclick="checkEx(this, false)" style="padding: 10px 14px; background: white; border: 1px solid #ddd; border-radius: 8px; text-align: left; cursor: pointer; font-size: 14px;">B) 不 (bù - non)</button>
+            <button class="ex-btn" onclick="checkEx(this, false)" style="padding: 10px 14px; background: white; border: 1px solid #ddd; border-radius: 8px; text-align: left; cursor: pointer; font-size: 14px;">C) 很 (hěn - molto)</button>
+        </div>
+        <div class="feedback" style="margin-top: 8px; font-size: 13px; font-weight: 600; display: none;"></div>
+    </div>
+</div>
+
+<script>
+function checkEx(btn, isCorrect) {
+    const parent = btn.parentElement;
+    const fb = parent.nextElementSibling;
+    parent.querySelectorAll('.ex-btn').forEach(b => {
+        b.style.borderColor = '#ddd';
+        b.style.background = 'white';
+    });
+    fb.style.display = 'block';
+    if (isCorrect) {
+        btn.style.borderColor = '#00dc64';
+        btn.style.background = '#e6fbee';
+        fb.style.color = '#00b34e';
+        fb.innerText = 'Corretto! "从前，有一只小白兔" significa "C\'era una volta un coniglietto".';
+    } else {
+        btn.style.borderColor = '#e53e3e';
+        btn.style.background = '#fff5f5';
+        fb.style.color = '#e53e3e';
+        fb.innerText = 'Riprova!';
+    }
+}
+</script>

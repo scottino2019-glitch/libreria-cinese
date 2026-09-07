@@ -1,47 +1,1893 @@
-<div style="width: 100%; max-width: 440px; font-family: system-ui, -apple-system, sans-serif;">
-    <h3 style="margin: 0 0 12px; color: #1a1a1a; font-size: 18px;">Quiz di Comprensione: Il Coniglietto (小兔子)</h3>
-    <p style="color: #666; font-size: 14px; margin-bottom: 20px;">Rispondi alle domande sulla favola per verificare la comprensione del testo.</p>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nuovo esercizio di lettura (Cinese) — Scheda di Comprensione</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --font-main: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --font-cjk: 'Noto Sans SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-handwriting: 'Kalam', cursive, sans-serif;
 
-    <div style="background: #f8f9fa; padding: 16px; border-radius: 10px; border: 1px solid #e5e5e5; margin-bottom: 16px;">
-        <p style="font-weight: 600; margin: 0 0 10px; font-size: 15px;">1. Come si dice "Coniglietto" in cinese?</p>
-        <div style="display: flex; flex-direction: column; gap: 8px;">
-            <button class="ex-btn" onclick="checkEx(this, true)" style="padding: 10px 14px; background: white; border: 1px solid #ddd; border-radius: 8px; text-align: left; cursor: pointer; font-size: 14px;">A) 小兔子 (xiǎo tùzi)</button>
-            <button class="ex-btn" onclick="checkEx(this, false)" style="padding: 10px 14px; background: white; border: 1px solid #ddd; border-radius: 8px; text-align: left; cursor: pointer; font-size: 14px;">B) 小猫 (xiǎo māo)</button>
-            <button class="ex-btn" onclick="checkEx(this, false)" style="padding: 10px 14px; background: white; border: 1px solid #ddd; border-radius: 8px; text-align: left; cursor: pointer; font-size: 14px;">C) 小狗 (xiǎo gǒu)</button>
-        </div>
-        <div class="feedback" style="margin-top: 8px; font-size: 13px; font-weight: 600; display: none;"></div>
-    </div>
+      /* Page Canvas */
+      --bg-page: #f6f5f1;
+      --bg-card: #ffffff;
+      --border-light: #e5e3dc;
+      --text-dark: #1f2937;
+      --text-sub: #4b5563;
+      --text-muted: #6b7280;
 
-    <div style="background: #f8f9fa; padding: 16px; border-radius: 10px; border: 1px solid #e5e5e5; margin-bottom: 16px;">
-        <p style="font-weight: 600; margin: 0 0 10px; font-size: 15px;">2. Di quale colore sono le orecchie del coniglietto nella storia?</p>
-        <div style="display: flex; flex-direction: column; gap: 8px;">
-            <button class="ex-btn" onclick="checkEx(this, false)" style="padding: 10px 14px; background: white; border: 1px solid #ddd; border-radius: 8px; text-align: left; cursor: pointer; font-size: 14px;">A) 黑色的 (Nere)</button>
-            <button class="ex-btn" onclick="checkEx(this, true)" style="padding: 10px 14px; background: white; border: 1px solid #ddd; border-radius: 8px; text-align: left; cursor: pointer; font-size: 14px;">B) 白色的 (Bianche)</button>
-            <button class="ex-btn" onclick="checkEx(this, false)" style="padding: 10px 14px; background: white; border: 1px solid #ddd; border-radius: 8px; text-align: left; cursor: pointer; font-size: 14px;">C) 红色的 (Rosse)</button>
-        </div>
-        <div class="feedback" style="margin-top: 8px; font-size: 13px; font-weight: 600; display: none;"></div>
-    </div>
-</div>
+      /* COLOR CODED SESSIONS */
+      /* 1. Reading Session (Sage & Emerald) */
+      --session-reading-bg: #f0fdfa;
+      --session-reading-border: #99f6e4;
+      --session-reading-primary: #0f766e;
+      --session-reading-dark: #115e59;
+      --session-reading-badge: #ccfbf1;
 
-<script>
-function checkEx(btn, isCorrect) {
-    const parent = btn.parentElement;
-    const fb = parent.nextElementSibling;
-    parent.querySelectorAll('.ex-btn').forEach(b => {
-        b.style.borderColor = '#ddd';
-        b.style.background = 'white';
-    });
-    fb.style.display = 'block';
-    if (isCorrect) {
-        btn.style.borderColor = '#00dc64';
-        btn.style.background = '#e6fbee';
-        fb.style.color = '#00b34e';
-        fb.innerText = 'Esatto! Ottima risposta.';
-    } else {
-        btn.style.borderColor = '#e53e3e';
-        btn.style.background = '#fff5f5';
-        fb.style.color = '#e53e3e';
-        fb.innerText = 'Risposta non corretta, riprova!';
+      /* 2. Multiple Choice Session (Royal Blue & Indigo) */
+      --session-mcq-bg: #eff6ff;
+      --session-mcq-border: #bfdbfe;
+      --session-mcq-primary: #1d4ed8;
+      --session-mcq-dark: #1e40af;
+      --session-mcq-badge: #dbeafe;
+
+      /* 3. Open Questions Session (Amethyst & Violet) */
+      --session-open-bg: #f5f3ff;
+      --session-open-border: #ddd6fe;
+      --session-open-primary: #6d28d9;
+      --session-open-dark: #5b21b6;
+      --session-open-badge: #ede9fe;
+
+      /* 4. Summary Session (Warm Amber & Gold) */
+      --session-summary-bg: #fffbeb;
+      --session-summary-border: #fde68a;
+      --session-summary-primary: #b45309;
+      --session-summary-dark: #92400e;
+      --session-summary-badge: #fef3c7;
+
+      /* 5. Vocab Session (Teal & Cyan) */
+      --session-vocab-bg: #f0f9ff;
+      --session-vocab-border: #bae6fd;
+      --session-vocab-primary: #0369a1;
+      --session-vocab-dark: #075985;
+      --session-vocab-badge: #e0f2fe;
+
+      /* Notebook Ruled Line Colors */
+      --notebook-paper-bg: #fffdf9;
+      --notebook-line-blue: #dbeafe;
+      --notebook-line-gray: #e2e8f0;
+      --notebook-red-margin: #f87171;
+      --notebook-hole: #cbd5e1;
     }
-}
-</script>
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background-color: var(--bg-page);
+      color: var(--text-dark);
+      line-height: 1.6;
+      padding: 24px 16px 80px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* TOP SCREEN BAR */
+    .screen-control-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding: 12px 18px;
+      background: #ffffff;
+      border: 1px solid var(--border-light);
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    .bar-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-sub);
+    }
+
+    .bar-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-decoration: none;
+    }
+
+    .btn-print {
+      background: #1e293b;
+      color: #ffffff;
+    }
+    .btn-print:hover {
+      background: #0f172a;
+    }
+
+    .btn-tool {
+      background: #ffffff;
+      color: var(--text-dark);
+      border-color: #d1d5db;
+    }
+    .btn-tool:hover {
+      background: #f3f4f6;
+    }
+
+    /* WORKSHEET MASTER HEADER */
+    .worksheet-header-card {
+      background: #ffffff;
+      border: 2px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 24px 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+      position: relative;
+    }
+
+    .header-pills-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .pill-lang {
+      background: var(--session-reading-bg);
+      color: var(--session-reading-primary);
+      border: 1px solid var(--session-reading-border);
+      font-weight: 700;
+      font-size: 12px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .pill-level {
+      background: #f1f5f9;
+      color: #334155;
+      font-weight: 600;
+      font-size: 12px;
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+
+    .pill-version {
+      font-weight: 700;
+      font-size: 12px;
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+    .version-student {
+      background: #ecfdf5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+    }
+    .version-teacher {
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fde68a;
+    }
+
+    .worksheet-main-title {
+      font-size: 24px;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.25;
+      margin-bottom: 4px;
+    }
+
+    .worksheet-target-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #64748b;
+      font-family: var(--font-cjk);
+      margin-bottom: 18px;
+    }
+
+    /* Student Notebook Info Bar */
+    .student-info-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 16px;
+      border-top: 1px dashed #cbd5e1;
+      padding-top: 16px;
+    }
+
+    .student-info-field {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .student-info-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #64748b;
+    }
+
+    .student-info-line {
+      height: 22px;
+      border-bottom: 1px solid #94a3b8;
+    }
+
+    /* ===================================================
+       SESSION COLOR CARD SYSTEM
+       =================================================== */
+    .session-card {
+      background: #ffffff;
+      border-radius: 16px;
+      margin-bottom: 28px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+      overflow: hidden;
+      border: 2px solid;
+    }
+
+    .session-header-band {
+      padding: 20px 24px 16px;
+      border-bottom: 1px solid;
+    }
+
+    .session-badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .session-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1e293b;
+      line-height: 1.3;
+      margin-bottom: 4px;
+    }
+
+    .session-subtitle {
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    .session-body {
+      padding: 24px;
+    }
+
+    /* 1. READING SESSION COLORS */
+    .session-reading {
+      border-color: var(--session-reading-border);
+    }
+    .reading-band {
+      background: var(--session-reading-bg);
+      border-bottom-color: var(--session-reading-border);
+    }
+    .reading-badge {
+      background: #ffffff;
+      color: var(--session-reading-primary);
+      border: 1px solid var(--session-reading-border);
+    }
+
+    /* 2. MCQ SESSION COLORS */
+    .session-mcq {
+      border-color: var(--session-mcq-border);
+    }
+    .mcq-band {
+      background: var(--session-mcq-bg);
+      border-bottom-color: var(--session-mcq-border);
+    }
+    .mcq-badge {
+      background: #ffffff;
+      color: var(--session-mcq-primary);
+      border: 1px solid var(--session-mcq-border);
+    }
+
+    /* 3. OPEN QUESTIONS SESSION COLORS */
+    .session-open {
+      border-color: var(--session-open-border);
+    }
+    .open-band {
+      background: var(--session-open-bg);
+      border-bottom-color: var(--session-open-border);
+    }
+    .open-badge {
+      background: #ffffff;
+      color: var(--session-open-primary);
+      border: 1px solid var(--session-open-border);
+    }
+
+    /* 4. SUMMARY SESSION COLORS */
+    .session-summary {
+      border-color: var(--session-summary-border);
+    }
+    .summary-band {
+      background: var(--session-summary-bg);
+      border-bottom-color: var(--session-summary-border);
+    }
+    .summary-badge {
+      background: #ffffff;
+      color: var(--session-summary-primary);
+      border: 1px solid var(--session-summary-border);
+    }
+
+    /* 5. VOCAB SESSION COLORS */
+    .session-vocab {
+      border-color: var(--session-vocab-border);
+    }
+    .vocab-band {
+      background: var(--session-vocab-bg);
+      border-bottom-color: var(--session-vocab-border);
+    }
+    .vocab-badge {
+      background: #ffffff;
+      color: var(--session-vocab-primary);
+      border: 1px solid var(--session-vocab-border);
+    }
+
+    /* ===================================================
+       ACADEMIC READING PASSAGE SHEET (WIDE, AIRY & READABLE)
+       =================================================== */
+    .reading-passage-sheet {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 32px 36px;
+      margin-bottom: 20px;
+      font-family: var(--font-cjk);
+      font-size: 19px;
+      color: #18181b;
+      line-height: 2.15;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.02);
+      width: 100%;
+      box-sizing: border-box;
+      transition: all 0.2s ease;
+    }
+
+    .reading-passage-sheet.large-text {
+      font-size: 22px;
+      line-height: 2.35;
+    }
+
+    .reading-paragraph {
+      margin-bottom: 1.5rem;
+      text-align: justify;
+      text-justify: inter-ideograph;
+      text-indent: 2em; /* Standard academic Chinese indentation */
+      word-break: break-all;
+    }
+
+    .reading-paragraph:last-child {
+      margin-bottom: 0;
+    }
+
+    /* For non-Chinese languages (Korean, Russian) that do not use paragraph indentation */
+    .reading-passage-sheet.no-indent .reading-paragraph {
+      text-indent: 0;
+      word-break: normal;
+    }
+
+    /* RUBY PINYIN STYLING */
+    ruby.cjk-ruby, ruby {
+      ruby-position: over;
+      ruby-align: center;
+      display: inline-ruby;
+      margin: 0;
+      padding: 0 1px;
+    }
+
+    ruby.cjk-ruby rt, ruby rt {
+      font-family: 'Noto Sans SC', system-ui, sans-serif;
+      font-size: 0.52em;
+      font-weight: 600;
+      color: #92400e; /* Deep amber for crisp Pinyin legibility */
+      line-height: 1;
+      text-align: center;
+      user-select: none;
+      letter-spacing: normal;
+    }
+
+    /* When Ruby is toggled OFF (pure Hanzi view) */
+    .reading-passage-sheet.hide-ruby rt {
+      display: none !important;
+    }
+    .reading-passage-sheet.hide-ruby,
+    .reading-passage-sheet.hide-ruby .reading-paragraph {
+      line-height: 1.85 !important;
+    }
+
+    /* Reading Controls Toolbar */
+    .reading-toolbar-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .reading-status-tag {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--session-reading-dark);
+      background: var(--session-reading-bg);
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--session-reading-border);
+    }
+
+    .reading-button-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn-ruby-toggle {
+      background: #fffbeb;
+      color: #92400e;
+      border: 1px solid #fde68a;
+      font-weight: 700;
+    }
+    .btn-ruby-toggle:hover {
+      background: #fef3c7;
+    }
+
+    /* Support Boxes (Translation / Phonetics block) */
+    .phonetic-raw-box {
+      background: #fdfbf7;
+      border: 1px solid #f5ede1;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-top: 14px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: #78350f;
+      line-height: 1.6;
+      white-space: pre-line;
+    }
+
+    .translation-callout-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-top: 14px;
+      font-size: 14px;
+      color: #334155;
+      line-height: 1.6;
+    }
+
+    .callout-header-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #64748b;
+      margin-bottom: 4px;
+    }
+
+    /* ===================================================
+       MULTIPLE CHOICE STYLING
+       =================================================== */
+    .mcq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .mcq-item {
+      background: #fafbfc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 18px;
+      transition: all 0.15s ease;
+    }
+    .mcq-item:hover {
+      border-color: #cbd5e1;
+      background: #ffffff;
+    }
+
+    .mcq-question-title {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 14px;
+    }
+
+    .mcq-index-tag {
+      background: var(--session-mcq-bg);
+      color: var(--session-mcq-primary);
+      border: 1px solid var(--session-mcq-border);
+      font-size: 11px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .mcq-options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .mcq-option-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.12s ease;
+    }
+    .mcq-option-label:hover {
+      background: #eff6ff;
+      border-color: #93c5fd;
+    }
+
+    .mcq-option-label input[type="radio"] {
+      cursor: pointer;
+      accent-color: var(--session-mcq-primary);
+      width: 16px;
+      height: 16px;
+    }
+
+    .opt-key-badge {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      background: #f1f5f9;
+      color: #475569;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .opt-content-text {
+      flex: 1;
+      color: #1e293b;
+    }
+
+    /* MCQ Feedback */
+    .mcq-feedback-panel {
+      display: none;
+      margin-top: 14px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+    }
+    .mcq-feedback-panel.visible {
+      display: block;
+    }
+    .mcq-feedback-panel.correct-state {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: #166534;
+    }
+    .mcq-feedback-panel.incorrect-state {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #991b1b;
+    }
+
+    .feedback-indicator {
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .feedback-explanation {
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .mcq-actions-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 24px;
+      padding-top: 18px;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .btn-mcq-check {
+      background: var(--session-mcq-primary);
+      color: #ffffff;
+      padding: 8px 18px;
+      font-size: 14px;
+    }
+    .btn-mcq-check:hover {
+      background: var(--session-mcq-dark);
+    }
+
+    .btn-mcq-reset {
+      background: #ffffff;
+      color: #475569;
+      border-color: #cbd5e1;
+    }
+    .btn-mcq-reset:hover {
+      background: #f8fafc;
+    }
+
+    .mcq-score-badge {
+      font-size: 14px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: var(--session-mcq-primary);
+      border: 1px solid #bfdbfe;
+    }
+
+    /* ===================================================
+       OPEN QUESTIONS STYLING
+       =================================================== */
+    .open-questions-list {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .open-q-card {
+      background: #fafbfc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .open-q-header {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .open-q-tag {
+      background: var(--session-open-bg);
+      color: var(--session-open-primary);
+      border: 1px solid var(--session-open-border);
+      font-size: 11px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .open-q-title-text {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .open-q-notebook-field {
+      position: relative;
+    }
+
+    .notebook-textarea {
+      width: 100%;
+      padding: 12px 14px;
+      font-family: inherit;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #1e293b;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      resize: vertical;
+    }
+    .notebook-textarea:focus {
+      outline: none;
+      border-color: var(--session-open-primary);
+      box-shadow: 0 0 0 2px var(--session-open-bg);
+    }
+
+    /* Notebook Ruled lines for handwriting / print */
+    .notebook-print-lines {
+      display: none;
+    }
+    .ruled-line {
+      border-bottom: 1px solid #cbd5e1;
+      height: 32px;
+    }
+
+    .sample-model-wrapper {
+      margin-top: 10px;
+    }
+
+    .btn-sample-toggle {
+      background: none;
+      border: none;
+      color: var(--session-open-primary);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 4px 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .btn-sample-toggle:hover {
+      text-decoration: underline;
+    }
+
+    .sample-model-box {
+      display: none;
+      margin-top: 8px;
+      padding: 12px 16px;
+      background: var(--session-open-bg);
+      border: 1px solid var(--session-open-border);
+      border-radius: 8px;
+      font-size: 13px;
+      color: var(--session-open-dark);
+    }
+    .sample-model-box.show, .sample-model-wrapper.always-open .sample-model-box {
+      display: block;
+    }
+
+    .model-tag {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    /* ===================================================
+       SUMMARY TASK STYLING
+       =================================================== */
+    .summary-prompt-card {
+      display: flex;
+      gap: 14px;
+      background: var(--session-summary-bg);
+      border: 1px solid var(--session-summary-border);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 18px;
+    }
+
+    .prompt-icon-badge {
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .prompt-title {
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--session-summary-dark);
+      margin-bottom: 4px;
+    }
+
+    .prompt-desc {
+      font-size: 14px;
+      color: #78350f;
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+
+    .prompt-requirements {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .req-chip {
+      background: #ffffff;
+      border: 1px solid #fde68a;
+      border-radius: 999px;
+      padding: 3px 10px;
+      font-size: 12px;
+      color: #92400e;
+    }
+
+    .summary-keypoints-card {
+      background: #fafaf9;
+      border: 1px solid #e7e5e4;
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin-bottom: 18px;
+      font-size: 13px;
+    }
+
+    .keypoints-title {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #57534e;
+      margin-bottom: 6px;
+    }
+
+    .keypoints-list {
+      padding-left: 18px;
+      color: #292524;
+    }
+
+    .notebook-writing-area {
+      background: #ffffff;
+      border: 2px solid #fed7aa;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: inset 0 0 8px rgba(0,0,0,0.02);
+    }
+
+    .notebook-area-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .notebook-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: #78350f;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .unit-counter-badge {
+      font-size: 12px;
+      font-weight: 600;
+      color: #57534e;
+    }
+
+    .counter-number {
+      font-family: var(--font-mono);
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .counter-status-pill {
+      margin-left: 6px;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .status-ok { background: #dcfce7; color: #15803d; }
+    .status-short { background: #fef9c3; color: #854d0e; }
+    .status-long { background: #fee2e2; color: #991b1b; }
+
+    .summary-notebook-textarea {
+      width: 100%;
+      padding: 14px;
+      font-family: var(--font-cjk);
+      font-size: 16px;
+      line-height: 1.8;
+      background: #fffdfa;
+      border: 1px solid #fed7aa;
+      border-radius: 8px;
+      resize: vertical;
+      color: #1c1917;
+    }
+    .summary-notebook-textarea:focus {
+      outline: none;
+      border-color: var(--session-summary-primary);
+      box-shadow: 0 0 0 2px #fef3c7;
+    }
+
+    .model-summary-content {
+      font-family: var(--font-cjk);
+      font-size: 15px;
+      line-height: 1.75;
+      color: #1c1917;
+      margin-top: 4px;
+      white-space: pre-line;
+    }
+
+    .rubric-container {
+      margin-top: 24px;
+      padding: 16px;
+      background: #fafaf9;
+      border: 1px solid #e7e5e4;
+      border-radius: 10px;
+    }
+
+    .rubric-header {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #78716c;
+      margin-bottom: 10px;
+    }
+
+    .rubric-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 8px;
+    }
+
+    .rubric-card {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      background: #ffffff;
+      border: 1px solid #e7e5e4;
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-size: 12px;
+      color: #44403c;
+    }
+
+    .rubric-num {
+      font-family: var(--font-mono);
+      font-weight: 800;
+      color: #a8a29e;
+      font-size: 11px;
+    }
+
+    /* ===================================================
+       VOCABULARY STYLING
+       =================================================== */
+    .vocab-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 12px;
+    }
+
+    .vocab-card-item {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-left: 4px solid var(--session-vocab-primary);
+      border-radius: 8px;
+      padding: 12px 14px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+
+    .vocab-word-term {
+      font-family: var(--font-cjk);
+      font-size: 17px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 2px;
+    }
+
+    .vocab-phonetic-term {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: #d97706;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .vocab-meaning-term {
+      font-size: 13px;
+      color: #475569;
+    }
+
+    .grammar-callout-card {
+      margin-top: 20px;
+      padding: 16px 20px;
+      background: var(--session-vocab-bg);
+      border: 1px solid var(--session-vocab-border);
+      border-radius: 10px;
+    }
+
+    .grammar-callout-title {
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--session-vocab-dark);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .grammar-notes-list {
+      padding-left: 18px;
+      color: #0369a1;
+      font-size: 13px;
+    }
+
+    /* ===================================================
+       PRINT STYLES
+       =================================================== */
+    @media print {
+      body {
+        background: #ffffff;
+        color: #000000;
+        padding: 0;
+        font-size: 11pt;
+      }
+
+      .no-print {
+        display: none !important;
+      }
+
+      .container {
+        max-width: 100%;
+        margin: 0;
+      }
+
+      .session-card, .worksheet-header-card {
+        box-shadow: none !important;
+        page-break-inside: avoid;
+        margin-bottom: 18pt;
+        border-width: 1.5pt !important;
+      }
+
+      .reading-passage-sheet {
+        border: none !important;
+        padding: 8pt 0 !important;
+        box-shadow: none !important;
+        font-size: 13pt !important;
+        line-height: 2.1 !important;
+      }
+      .reading-passage-sheet.hide-ruby,
+      .reading-passage-sheet.hide-ruby .reading-paragraph {
+        line-height: 1.75 !important;
+      }
+
+      .notebook-textarea, .summary-notebook-textarea {
+        display: none !important;
+      }
+
+      .notebook-print-lines {
+        display: block !important;
+        margin-top: 8pt;
+      }
+
+      .sample-model-box {
+        display: block !important;
+        background: #fbfbfb !important;
+        border: 1pt dashed #999999 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Top Action Toolbar (Screen Only) -->
+    <header class="screen-control-bar no-print">
+      <div class="bar-left">
+        <span>Scheda Didattica con Quaderno</span>
+        <span>•</span>
+        <span>🇨🇳 Cinese (Mandarin)</span>
+      </div>
+      <div class="bar-right">
+        
+          <button class="btn btn-ruby-toggle" onclick="toggleRubyPinyin()" id="btn-ruby-toggle" title="Attiva/Disattiva Pinyin sopra i caratteri">
+            <span id="ruby-btn-icon">🔤</span> <span id="ruby-btn-label">Pinyin Ruby: ATTIVO</span>
+          </button>
+        
+
+        <button class="btn btn-tool" onclick="toggleAudioSpeech()" id="btn-audio-speech">
+          <span id="audio-icon">🔊</span> <span id="audio-label">Ascolta Testo</span>
+        </button>
+        
+        <button class="btn btn-tool" onclick="toggleTextFontSize()">
+          <span>🗚</span> Zoom
+        </button>
+
+        <button class="btn btn-print" onclick="window.print()">
+          <span>🖨️</span> Stampa / Salva PDF
+        </button>
+      </div>
+    </header>
+
+    <!-- Master Worksheet Header -->
+    <div class="worksheet-header-card">
+      <div class="header-pills-row">
+        <span class="pill-lang">🇨🇳 Cinese (Mandarin)</span>
+        <span class="pill-level">HSK 2</span>
+        <span class="pill-level">Tema: Il coniglietto</span>
+        <span class="pill-version version-student">
+          👤 Versione Studente
+        </span>
+      </div>
+
+      <h1 class="worksheet-main-title">Nuovo esercizio di lettura (Cinese)</h1>
+      <div class="worksheet-target-title">龟兔赛跑</div>
+
+      <!-- Student Fields for Classroom -->
+      <div class="student-info-grid">
+        <div class="student-info-field">
+          <span class="student-info-label">Nome e Cognome Studente</span>
+          <div class="student-info-line"></div>
+        </div>
+        <div class="student-info-field">
+          <span class="student-info-label">Data</span>
+          <div class="student-info-line"></div>
+        </div>
+        <div class="student-info-field">
+          <span class="student-info-label">Punteggio / Valutazione</span>
+          <div class="student-info-line"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN EXERCISE CONTENT -->
+    <main>
+      <!-- SESSION 1: READING PASSAGE (FULL-WIDTH, NATURAL & SPACIOUS) -->
+      <article class="session-card session-reading" id="session-reading">
+        <div class="session-header-band reading-band">
+          <div class="session-badge-pill reading-badge">
+            <span class="badge-icon">📖</span> SESSIONE LETTURA • TESTO DEL BRANO
+          </div>
+          <h2 class="session-title">Brano da Leggere (Cinese (Mandarin))</h2>
+          <div class="worksheet-target-title" style="margin-top: 2px; margin-bottom: 6px;">龟兔赛跑</div>
+          <p class="session-subtitle">Leggi con cura il testo seguente prima di rispondere alle domande di comprensione.</p>
+        </div>
+
+        <div class="session-body">
+          <div class="reading-toolbar-row no-print">
+            <div class="reading-status-tag">
+              Format: Testo con Pinyin Ruby interattivo
+            </div>
+
+            <div class="reading-button-group">
+              
+                <button class="btn btn-ruby-toggle" onclick="toggleRubyPinyin()" id="btn-ruby-inner" title="Mostra o nascondi il Pinyin sopra i caratteri">
+                  <span>🔤</span> <span id="ruby-inner-label">Nascondi Pinyin</span>
+                </button>
+              
+
+              <button class="btn btn-tool" onclick="toggleAudioSpeech()" id="btn-audio-reading">
+                <span>🔊</span> <span id="audio-reading-label">Ascolta</span>
+              </button>
+
+              <button class="btn btn-tool" onclick="toggleTextFontSize()" title="Ingrandisci dimensione testo">
+                <span>🗚</span> Zoom
+              </button>
+
+              
+                <button class="btn btn-tool" onclick="toggleTranslationBox()" id="btn-trans-toggle">
+                  <span>🇮🇹</span> <span id="trans-btn-label">Traduzione</span>
+                </button>
+              
+            </div>
+          </div>
+
+          <!-- AMPIO E LIMPIDO FOGLIO DI LETTURA A TUTTA LARGHEZZA -->
+          <div 
+            class="reading-passage-sheet  " 
+            id="reading-passage-text"
+          >
+            <p class="reading-paragraph"><ruby class="cjk-ruby"><rb>一</rb><rt>yī</rt></ruby><ruby class="cjk-ruby"><rb>只</rb><rt>zhǐ</rt></ruby><ruby class="cjk-ruby"><rb>小</rb><rt>xiǎo</rt></ruby><ruby class="cjk-ruby"><rb>白</rb><rt>bái</rt></ruby><ruby class="cjk-ruby"><rb>兔</rb><rt>tù</rt></ruby><ruby class="cjk-ruby"><rb>在</rb><rt>zài</rt></ruby><ruby class="cjk-ruby"><rb>草</rb><rt>cǎo</rt></ruby><ruby class="cjk-ruby"><rb>地</rb><rt>dì</rt></ruby><ruby class="cjk-ruby"><rb>上</rb><rt>shàng</rt></ruby><ruby class="cjk-ruby"><rb>蹦</rb><rt>bèng</rt></ruby><ruby class="cjk-ruby"><rb>蹦</rb><rt>bèng</rt></ruby><ruby class="cjk-ruby"><rb>跳</rb><rt>tiào</rt></ruby><ruby class="cjk-ruby"><rb>跳</rb><rt>tiào</rt></ruby>,  <ruby class="cjk-ruby"><rb>跑</rb><rt>pǎo</rt></ruby><ruby class="cjk-ruby"><rb>来</rb><rt>lái</rt></ruby><ruby class="cjk-ruby"><rb>跑</rb><rt>pǎo</rt></ruby><ruby class="cjk-ruby"><rb>去</rb><rt>qù</rt></ruby>,<ruby class="cjk-ruby"><rb>玩</rb><rt>wán</rt></ruby><ruby class="cjk-ruby"><rb>得</rb><rt>dé</rt></ruby><ruby class="cjk-ruby"><rb>很</rb><rt>hěn</rt></ruby><ruby class="cjk-ruby"><rb>开</rb><rt>kāi</rt></ruby><ruby class="cjk-ruby"><rb>心</rb><rt>xīn</rt></ruby>。<ruby class="cjk-ruby"><rb>小</rb><rt>xiǎo</rt></ruby><ruby class="cjk-ruby"><rb>白</rb><rt>bái</rt></ruby><ruby class="cjk-ruby"><rb>兔</rb><rt>tù</rt></ruby><ruby class="cjk-ruby"><rb>看</rb><rt>kàn</rt></ruby><ruby class="cjk-ruby"><rb>见</rb><rt>jiàn</rt></ruby><ruby class="cjk-ruby"><rb>一</rb><rt>yī</rt></ruby><ruby class="cjk-ruby"><rb>只</rb><rt>zhǐ</rt></ruby><ruby class="cjk-ruby"><rb>乌</rb><rt>wū</rt></ruby><ruby class="cjk-ruby"><rb>龟</rb><rt>guī</rt></ruby><ruby class="cjk-ruby"><rb>慢</rb><rt>màn</rt></ruby><ruby class="cjk-ruby"><rb>吞</rb><rt>tūn</rt></ruby><ruby class="cjk-ruby"><rb>吞</rb><rt>tūn</rt></ruby><ruby class="cjk-ruby"><rb>地</rb><rt>de</rt></ruby> <ruby class="cjk-ruby"><rb>爬</rb><rt>pá</rt></ruby><ruby class="cjk-ruby"><rb>过</rb><rt>guò</rt></ruby><ruby class="cjk-ruby"><rb>来</rb><rt>lái</rt></ruby>,<ruby class="cjk-ruby"><rb>就</rb><rt>jiù</rt></ruby><ruby class="cjk-ruby"><rb>嘲</rb><rt>cháo</rt></ruby><ruby class="cjk-ruby"><rb>笑</rb><rt>xiào</rt></ruby><ruby class="cjk-ruby"><rb>说</rb><rt>shuō</rt></ruby>: “<ruby class="cjk-ruby"><rb>哎</rb><rt>āi</rt></ruby><ruby class="cjk-ruby"><rb>哟</rb><rt>yō</rt></ruby>,<ruby class="cjk-ruby"><rb>我</rb><rt>wǒ</rt></ruby><ruby class="cjk-ruby"><rb>的</rb><rt>de</rt></ruby> <ruby class="cjk-ruby"><rb>乌</rb><rt>wū</rt></ruby><ruby class="cjk-ruby"><rb>龟</rb><rt>guī</rt></ruby><ruby class="cjk-ruby"><rb>大</rb><rt>dà</rt></ruby><ruby class="cjk-ruby"><rb>哥</rb><rt>gē</rt></ruby>,<ruby class="cjk-ruby"><rb>你</rb><rt>nǐ</rt></ruby><ruby class="cjk-ruby"><rb>走</rb><rt>zǒu</rt></ruby><ruby class="cjk-ruby"><rb>得</rb><rt>dé</rt></ruby><ruby class="cjk-ruby"><rb>太</rb><rt>tài</rt></ruby><ruby class="cjk-ruby"><rb>慢</rb><rt>màn</rt></ruby><ruby class="cjk-ruby"><rb>了</rb><rt>le</rt></ruby>!” <ruby class="cjk-ruby"><rb>小</rb><rt>xiǎo</rt></ruby><ruby class="cjk-ruby"><rb>白</rb><rt>bái</rt></ruby><ruby class="cjk-ruby"><rb>兔</rb><rt>tù</rt></ruby><ruby class="cjk-ruby"><rb>说</rb><rt>shuō</rt></ruby>: “<ruby class="cjk-ruby"><rb>一</rb><rt>yī</rt></ruby><ruby class="cjk-ruby"><rb>个</rb><rt>gè</rt></ruby><ruby class="cjk-ruby"><rb>人</rb><rt>rén</rt></ruby><ruby class="cjk-ruby"><rb>走</rb><rt>zǒu</rt></ruby><ruby class="cjk-ruby"><rb>有</rb><rt>yǒu</rt></ruby><ruby class="cjk-ruby"><rb>什</rb><rt>shé</rt></ruby><ruby class="cjk-ruby"><rb>么</rb><rt>me</rt></ruby><ruby class="cjk-ruby"><rb>意</rb><rt>yì</rt></ruby><ruby class="cjk-ruby"><rb>思</rb><rt>si</rt></ruby>, <ruby class="cjk-ruby"><rb>咱</rb><rt>zán</rt></ruby><ruby class="cjk-ruby"><rb>俩</rb><rt>liǎ</rt></ruby><ruby class="cjk-ruby"><rb>赛</rb><rt>sài</rt></ruby><ruby class="cjk-ruby"><rb>跑</rb><rt>pǎo</rt></ruby>,<ruby class="cjk-ruby"><rb>你</rb><rt>nǐ</rt></ruby><ruby class="cjk-ruby"><rb>敢</rb><rt>gǎn</rt></ruby><ruby class="cjk-ruby"><rb>吗</rb><rt>ma</rt></ruby>?</p>
+<p class="reading-paragraph">“<span class="cjk-char">比</span><span class="cjk-char">就</span><span class="cjk-char">比</span>,<ruby class="cjk-ruby"><rb>有</rb><rt>yǒu</rt></ruby><ruby class="cjk-ruby"><rb>什</rb><rt>shén</rt></ruby><ruby class="cjk-ruby"><rb>么</rb><rt>me</rt></ruby> <ruby class="cjk-ruby"><rb>不</rb><rt>bù</rt></ruby><span class="cjk-char">敢</span><ruby class="cjk-ruby"><rb>的</rb><rt>de</rt></ruby>!”<ruby class="cjk-ruby"><rb>乌</rb><rt>wū</rt></ruby><span class="cjk-char">龟</span> <span class="cjk-char">声</span> <span class="cjk-char">气</span><span class="cjk-char">地</span><span class="cjk-char">回</span><span class="cjk-char">答</span>。<ruby class="cjk-ruby"><rb>它</rb><rt>tā</rt></ruby><ruby class="cjk-ruby"><rb>们</rb><rt>men</rt></ruby><span class="cjk-char">俩</span><span class="cjk-char">请</span><ruby class="cjk-ruby"><rb>来</rb><rt>lái</rt></ruby><span class="cjk-char">了</span><ruby class="cjk-ruby"><rb>大</rb><rt>dà</rt></ruby><span class="cjk-char">象</span><ruby class="cjk-ruby"><rb>做</rb><rt>zuò</rt></ruby><span class="cjk-char">裁</span><span class="cjk-char">判</span>,<span class="cjk-char">规</span><span class="cjk-char">定</span><ruby class="cjk-ruby"><rb>谁</rb><rt>shéi</rt></ruby><ruby class="cjk-ruby"><rb>先</rb><rt>xiān</rt></ruby></p>
+<p class="reading-paragraph"><ruby class="cjk-ruby"><rb>跑</rb><rt>bǐ</rt></ruby><ruby class="cjk-ruby"><rb>到</rb><rt>jiù</rt></ruby><ruby class="cjk-ruby"><rb>终</rb><rt>bǐ</rt></ruby><ruby class="cjk-ruby"><rb>点</rb><rt>yǒu</rt></ruby>,<ruby class="cjk-ruby"><rb>谁</rb><rt>shé</rt></ruby><ruby class="cjk-ruby"><rb>就</rb><rt>me</rt></ruby><ruby class="cjk-ruby"><rb>是</rb><rt>bù</rt></ruby><ruby class="cjk-ruby"><rb>冠</rb><rt>gǎn</rt></ruby><ruby class="cjk-ruby"><rb>军</rb><rt>de</rt></ruby>。<ruby class="cjk-ruby"><rb>大</rb><rt>wū</rt></ruby><ruby class="cjk-ruby"><rb>象</rb><rt>guī</rt></ruby><ruby class="cjk-ruby"><rb>一</rb><rt>shēng</rt></ruby><ruby class="cjk-ruby"><rb>甩</rb><rt>qì</rt></ruby><ruby class="cjk-ruby"><rb>鼻</rb><rt>de</rt></ruby><ruby class="cjk-ruby"><rb>子</rb><rt>huí</rt></ruby>,<ruby class="cjk-ruby"><rb>小</rb><rt>dá</rt></ruby><ruby class="cjk-ruby"><rb>白</rb><rt>tā</rt></ruby><ruby class="cjk-ruby"><rb>兔</rb><rt>men</rt></ruby> <ruby class="cjk-ruby"><rb>和</rb><rt>liǎ</rt></ruby><ruby class="cjk-ruby"><rb>乌</rb><rt>qǐng</rt></ruby><ruby class="cjk-ruby"><rb>龟</rb><rt>lái</rt></ruby><ruby class="cjk-ruby"><rb>的</rb><rt>le</rt></ruby><ruby class="cjk-ruby"><rb>比</rb><rt>dà</rt></ruby><ruby class="cjk-ruby"><rb>赛</rb><rt>xiàng</rt></ruby><ruby class="cjk-ruby"><rb>就</rb><rt>zuò</rt></ruby><ruby class="cjk-ruby"><rb>开</rb><rt>cái</rt></ruby><ruby class="cjk-ruby"><rb>始</rb><rt>pàn</rt></ruby><ruby class="cjk-ruby"><rb>了</rb><rt>guī</rt></ruby>。<ruby class="cjk-ruby"><rb>小</rb><rt>dìng</rt></ruby><ruby class="cjk-ruby"><rb>白</rb><rt>shuí</rt></ruby><ruby class="cjk-ruby"><rb>兔</rb><rt>xiān</rt></ruby><ruby class="cjk-ruby"><rb>三</rb><rt>pǎo</rt></ruby><ruby class="cjk-ruby"><rb>蹦</rb><rt>dào</rt></ruby><ruby class="cjk-ruby"><rb>两</rb><rt>zhōng</rt></ruby><ruby class="cjk-ruby"><rb>跳</rb><rt>diǎn</rt></ruby>,<ruby class="cjk-ruby"><rb>就</rb><rt>shuí</rt></ruby><ruby class="cjk-ruby"><rb>跑</rb><rt>jiù</rt></ruby><ruby class="cjk-ruby"><rb>到</rb><rt>shì</rt></ruby><ruby class="cjk-ruby"><rb>了</rb><rt>guàn</rt></ruby><ruby class="cjk-ruby"><rb>前</rb><rt>jūn</rt></ruby><ruby class="cjk-ruby"><rb>边</rb><rt>dà</rt></ruby>, <ruby class="cjk-ruby"><rb>它</rb><rt>xiàng</rt></ruby><ruby class="cjk-ruby"><rb>回</rb><rt>yī</rt></ruby><ruby class="cjk-ruby"><rb>头</rb><rt>shuǎi</rt></ruby><ruby class="cjk-ruby"><rb>看</rb><rt>bí</rt></ruby><ruby class="cjk-ruby"><rb>看</rb><rt>zi</rt></ruby>,<ruby class="cjk-ruby"><rb>乌</rb><rt>xiǎo</rt></ruby><ruby class="cjk-ruby"><rb>龟</rb><rt>bái</rt></ruby><ruby class="cjk-ruby"><rb>才</rb><rt>tù</rt></ruby><ruby class="cjk-ruby"><rb>爬</rb><rt>hé</rt></ruby><ruby class="cjk-ruby"><rb>了</rb><rt>wū</rt></ruby><ruby class="cjk-ruby"><rb>一</rb><rt>guī</rt></ruby><ruby class="cjk-ruby"><rb>小</rb><rt>de</rt></ruby><ruby class="cjk-ruby"><rb>段</rb><rt>bǐ</rt></ruby><ruby class="cjk-ruby"><rb>路</rb><rt>sài</rt></ruby>。<ruby class="cjk-ruby"><rb>小</rb><rt>jiù</rt></ruby><ruby class="cjk-ruby"><rb>白</rb><rt>kāi</rt></ruby><ruby class="cjk-ruby"><rb>兔</rb><rt>shǐ</rt></ruby><ruby class="cjk-ruby"><rb>心</rb><rt>le</rt></ruby><ruby class="cjk-ruby"><rb>想</rb><rt>xiǎo</rt></ruby>:<ruby class="cjk-ruby"><rb>乌</rb><rt>bái</rt></ruby><ruby class="cjk-ruby"><rb>龟</rb><rt>tù</rt></ruby> <ruby class="cjk-ruby"><rb>哪</rb><rt>sān</rt></ruby><ruby class="cjk-ruby"><rb>是</rb><rt>bèng</rt></ruby><ruby class="cjk-ruby"><rb>我</rb><rt>liǎng</rt></ruby><ruby class="cjk-ruby"><rb>的</rb><rt>tiào</rt></ruby><ruby class="cjk-ruby"><rb>对</rb><rt>jiù</rt></ruby><ruby class="cjk-ruby"><rb>手</rb><rt>pǎo</rt></ruby>,<ruby class="cjk-ruby"><rb>我</rb><rt>dào</rt></ruby><ruby class="cjk-ruby"><rb>躺</rb><rt>le</rt></ruby><ruby class="cjk-ruby"><rb>下</rb><rt>qián</rt></ruby> <ruby class="cjk-ruby"><rb>睡</rb><rt>bian</rt></ruby><ruby class="cjk-ruby"><rb>一</rb><rt>tā</rt></ruby><ruby class="cjk-ruby"><rb>觉</rb><rt>huí</rt></ruby><ruby class="cjk-ruby"><rb>吧</rb><rt>tóu</rt></ruby>!<ruby class="cjk-ruby"><rb>于</rb><rt>kàn</rt></ruby><ruby class="cjk-ruby"><rb>是</rb><rt>kàn</rt></ruby><ruby class="cjk-ruby"><rb>它</rb><rt>wū</rt></ruby><ruby class="cjk-ruby"><rb>躺</rb><rt>guī</rt></ruby><ruby class="cjk-ruby"><rb>到</rb><rt>cái</rt></ruby> <ruby class="cjk-ruby"><rb>树</rb><rt>pá</rt></ruby><ruby class="cjk-ruby"><rb>荫</rb><rt>le</rt></ruby><ruby class="cjk-ruby"><rb>下</rb><rt>yī</rt></ruby>,<ruby class="cjk-ruby"><rb>合</rb><rt>xiǎo</rt></ruby><ruby class="cjk-ruby"><rb>上</rb><rt>duàn</rt></ruby><ruby class="cjk-ruby"><rb>眼</rb><rt>lù</rt></ruby><ruby class="cjk-ruby"><rb>皮</rb><rt>xiǎo</rt></ruby>,<ruby class="cjk-ruby"><rb>真</rb><rt>bái</rt></ruby> <ruby class="cjk-ruby"><rb>的</rb><rt>tù</rt></ruby><ruby class="cjk-ruby"><rb>睡</rb><rt>xīn</rt></ruby><ruby class="cjk-ruby"><rb>着</rb><rt>xiǎng</rt></ruby><ruby class="cjk-ruby"><rb>了</rb><rt>wū</rt></ruby>。<ruby class="cjk-ruby"><rb>小</rb><rt>guī</rt></ruby><ruby class="cjk-ruby"><rb>白</rb><rt>nǎ</rt></ruby><ruby class="cjk-ruby"><rb>兔</rb><rt>shì</rt></ruby><ruby class="cjk-ruby"><rb>心</rb><rt>wǒ</rt></ruby><ruby class="cjk-ruby"><rb>想</rb><rt>de</rt></ruby>:<ruby class="cjk-ruby"><rb>乌</rb><rt>duì</rt></ruby><ruby class="cjk-ruby"><rb>龟</rb><rt>shǒu</rt></ruby> <ruby class="cjk-ruby"><rb>哪</rb><rt>wǒ</rt></ruby><ruby class="cjk-ruby"><rb>是</rb><rt>tǎng</rt></ruby><ruby class="cjk-ruby"><rb>我</rb><rt>xià</rt></ruby><ruby class="cjk-ruby"><rb>的</rb><rt>shuì</rt></ruby><ruby class="cjk-ruby"><rb>对</rb><rt>yī</rt></ruby><ruby class="cjk-ruby"><rb>手</rb><rt>jiào</rt></ruby>,<ruby class="cjk-ruby"><rb>我</rb><rt>ba</rt></ruby><ruby class="cjk-ruby"><rb>躺</rb><rt>yú</rt></ruby><ruby class="cjk-ruby"><rb>下</rb><rt>shì</rt></ruby> <ruby class="cjk-ruby"><rb>睡</rb><rt>tā</rt></ruby><ruby class="cjk-ruby"><rb>一</rb><rt>tǎng</rt></ruby><ruby class="cjk-ruby"><rb>觉</rb><rt>dào</rt></ruby><ruby class="cjk-ruby"><rb>吧</rb><rt>shù</rt></ruby>!<ruby class="cjk-ruby"><rb>于</rb><rt>yìn</rt></ruby><ruby class="cjk-ruby"><rb>是</rb><rt>xià</rt></ruby><ruby class="cjk-ruby"><rb>它</rb><rt>hé</rt></ruby><ruby class="cjk-ruby"><rb>躺</rb><rt>shàng</rt></ruby><ruby class="cjk-ruby"><rb>到</rb><rt>yǎn</rt></ruby> <ruby class="cjk-ruby"><rb>树</rb><rt>pí</rt></ruby><ruby class="cjk-ruby"><rb>荫</rb><rt>zhēn</rt></ruby><ruby class="cjk-ruby"><rb>下</rb><rt>de</rt></ruby>,<ruby class="cjk-ruby"><rb>合</rb><rt>shuì</rt></ruby><ruby class="cjk-ruby"><rb>上</rb><rt>zháo</rt></ruby><ruby class="cjk-ruby"><rb>眼</rb><rt>le</rt></ruby><ruby class="cjk-ruby"><rb>皮</rb><rt>ri</rt></ruby>,<ruby class="cjk-ruby"><rb>真</rb><rt>pe</rt></ruby> <ruby class="cjk-ruby"><rb>的</rb><rt>tu</rt></ruby><ruby class="cjk-ruby"><rb>睡</rb><rt>to</rt></ruby><ruby class="cjk-ruby"><rb>着</rb><rt>ne</rt></ruby><ruby class="cjk-ruby"><rb>了</rb><rt>te</rt></ruby>。<ruby class="cjk-ruby"><rb>再</rb><rt>sto</rt></ruby><ruby class="cjk-ruby"><rb>说</rb><rt>shuō</rt></ruby><ruby class="cjk-ruby"><rb>乌</rb><rt>wū</rt></ruby><span class="cjk-char">龟</span>,<span class="cjk-char">虽</span><span class="cjk-char">然</span><span class="cjk-char">爬</span> <span class="cjk-char">得</span><ruby class="cjk-ruby"><rb>很</rb><rt>hěn</rt></ruby><span class="cjk-char">慢</span>,<span class="cjk-char">但</span><ruby class="cjk-ruby"><rb>它</rb><rt>tā</rt></ruby><span class="cjk-char">却</span><ruby class="cjk-ruby"><rb>一</rb><rt>yì</rt></ruby><span class="cjk-char">个</span><span class="cjk-char">劲</span><ruby class="cjk-ruby"><rb>儿</rb><rt>ér</rt></ruby> <span class="cjk-char">地</span><span class="cjk-char">往</span><span class="cjk-char">前</span><span class="cjk-char">爬</span>,<span class="cjk-char">终</span><span class="cjk-char">于</span><span class="cjk-char">超</span><span class="cjk-char">过</span><span class="cjk-char">了</span><span class="cjk-char">兔</span> <span class="cjk-char">子</span>,<span class="cjk-char">离</span><span class="cjk-char">终</span><ruby class="cjk-ruby"><rb>点</rb><rt>diǎn</rt></ruby><span class="cjk-char">越</span><ruby class="cjk-ruby"><rb>来</rb><rt>lái</rt></ruby><span class="cjk-char">越</span><span class="cjk-char">近</span>。<ruby class="cjk-ruby"><rb>小</rb><rt>xiǎo</rt></ruby><span class="cjk-char">白</span><span class="cjk-char">兔</span><ruby class="cjk-ruby"><rb>一</rb><rt>yì</rt></ruby><span class="cjk-char">觉</span><span class="cjk-char">醒</span><ruby class="cjk-ruby"><rb>来</rb><rt>lái</rt></ruby>,<ruby class="cjk-ruby"><rb>看</rb><rt>kàn</rt></ruby> <span class="cjk-char">见</span><ruby class="cjk-ruby"><rb>乌</rb><rt>wū</rt></ruby><span class="cjk-char">龟</span><span class="cjk-char">就</span><span class="cjk-char">要</span><ruby class="cjk-ruby"><rb>到</rb><rt>dào</rt></ruby><span class="cjk-char">终</span><ruby class="cjk-ruby"><rb>点</rb><rt>diǎn</rt></ruby><span class="cjk-char">了</span>,<span class="cjk-char">赶</span> <span class="cjk-char">紧</span><ruby class="cjk-ruby"><rb>去</rb><rt>qù</rt></ruby><span class="cjk-char">追</span>,<ruby class="cjk-ruby"><rb>可</rb><rt>kě</rt></ruby><ruby class="cjk-ruby"><rb>是</rb><rt>shì</rt></ruby><span class="cjk-char">已</span><span class="cjk-char">经</span><ruby class="cjk-ruby"><rb>来</rb><rt>lái</rt></ruby><ruby class="cjk-ruby"><rb>不</rb><rt>bù</rt></ruby><span class="cjk-char">及</span> <span class="cjk-char">了</span>。<ruby class="cjk-ruby"><rb>乌</rb><rt>wū</rt></ruby><span class="cjk-char">龟</span><span class="cjk-char">取</span><span class="cjk-char">得</span><span class="cjk-char">了</span><span class="cjk-char">胜</span><span class="cjk-char">利</span>。</p>
+          </div>
+
+          <!-- Support: Italian Translation -->
+          
+            <div class="translation-callout-box" id="translation-callout" style="display:none;">
+              <div class="callout-header-label">Traduzione in Italiano:</div>
+              <p>Un piccolo coniglietto bianco saltellava qua e là sull&#039;erba, correva avanti e indietro e si divertiva un mondo. Il coniglietto vide una tartaruga che strisciava lentamente verso di lui e la derise dicendo: «Ehi, mio caro &#039;fratello maggiore&#039; tartaruga, cammini troppo piano!». Il coniglietto aggiunse: «Che gusto c&#039;è a camminare da soli? Facciamo una gara di corsa noi due, ne hai il coraggio?».
+
+«Se dobbiamo gareggiare, gareggiamo! Perché non dovrei averne il coraggio?», rispose la tartaruga con voce ferma. Chiesero a un elefante di fare da arbitro, stabilendo che chi fosse arrivato per primo al traguardo sarebbe stato il campione. L&#039;elefante scosse la proboscide e la gara tra il coniglietto e la tartaruga ebbe inizio. Con pochi salti, il coniglietto arrivò subito avanti; si guardò indietro e vide che la tartaruga aveva percorso solo un breve tratto. Il coniglietto pensò: «La tartaruga non è affatto alla mia altezza, mi sdraierò a fare un pisolino!». Così si stese all&#039;ombra di un albero, chiuse gli occhi e si addormentò profondamente.
+
+Nel frattempo la tartaruga, sebbene strisciasse molto lentamente, continuò a avanzare con insistenza; alla fine superò il coniglio e si avvicinò sempre di più al traguardo. Quando il coniglietto si svegliò, vide che la tartaruga stava per arrivare alla meta e si affrettò a inseguirla, ma era ormai troppo tardi. La tartaruga ottenne la vittoria.&quot;</p>
+            </div>
+          
+
+          <!-- Support: Raw Phonetic block (if non-chinese or supplementary) -->
+          
+        </div>
+      </article>
+
+      <!-- SESSION 2: MULTIPLE CHOICE QUESTIONS -->
+      
+      <section class="session-card session-mcq" id="session-mcq">
+        <div class="session-header-band mcq-band">
+          <div class="session-badge-pill mcq-badge">
+            <span class="badge-icon">❓</span> PARTE 1 • DOMANDE A RISPOSTA MULTIPLA
+          </div>
+          <h2 class="session-title">Verifica della Comprensione del Testo</h2>
+          <p class="session-subtitle">Leggi attentamente ciascuna domanda e seleziona l'opzione corretta tra le quattro proposte.</p>
+        </div>
+
+        <div class="session-body">
+          <div class="mcq-list">
+            
+              <div class="mcq-item" data-question-id="mcq_1788803312193" data-correct="1">
+                <div class="mcq-question-title">
+                  <span class="mcq-index-tag">Domanda 1</span>
+                  <span class="mcq-question-text">Perché il coniglietto bianco prende in giro la tartaruga?</span>
+                </div>
+                <div class="mcq-options-grid">
+                  
+                    <label class="mcq-option-label" data-opt-index="0">
+                      <input type="radio" name="q_mcq_1788803312193" value="0"  />
+                      <span class="opt-key-badge">A</span>
+                      <span class="opt-content-text">Perché la tartaruga è antipatica.</span>
+                    </label>
+                  
+                    <label class="mcq-option-label" data-opt-index="1">
+                      <input type="radio" name="q_mcq_1788803312193" value="1"  />
+                      <span class="opt-key-badge">B</span>
+                      <span class="opt-content-text">Perché la tartaruga cammina molto lentamente.</span>
+                    </label>
+                  
+                    <label class="mcq-option-label" data-opt-index="2">
+                      <input type="radio" name="q_mcq_1788803312193" value="2"  />
+                      <span class="opt-key-badge">C</span>
+                      <span class="opt-content-text">Perché la tartaruga non vuole giocare con lui.</span>
+                    </label>
+                  
+                    <label class="mcq-option-label" data-opt-index="3">
+                      <input type="radio" name="q_mcq_1788803312193" value="3"  />
+                      <span class="opt-key-badge">D</span>
+                      <span class="opt-content-text"></span>
+                    </label>
+                  
+                </div>
+                <div class="mcq-feedback-panel ">
+                  <div class="feedback-indicator">
+                    <span class="indicator-icon">✓</span>
+                    <strong>Esito Risposta: Opzione B</strong>
+                  </div>
+                  <div class="feedback-explanation">la b</div>
+                </div>
+              </div>
+            
+              <div class="mcq-item" data-question-id="mcq_1788804769056" data-correct="2">
+                <div class="mcq-question-title">
+                  <span class="mcq-index-tag">Domanda 2</span>
+                  <span class="mcq-question-text"> Chi viene scelto come arbitro per la gara?</span>
+                </div>
+                <div class="mcq-options-grid">
+                  
+                    <label class="mcq-option-label" data-opt-index="0">
+                      <input type="radio" name="q_mcq_1788804769056" value="0"  />
+                      <span class="opt-key-badge">A</span>
+                      <span class="opt-content-text">Un leone.</span>
+                    </label>
+                  
+                    <label class="mcq-option-label" data-opt-index="1">
+                      <input type="radio" name="q_mcq_1788804769056" value="1"  />
+                      <span class="opt-key-badge">B</span>
+                      <span class="opt-content-text">Una scimmia.</span>
+                    </label>
+                  
+                    <label class="mcq-option-label" data-opt-index="2">
+                      <input type="radio" name="q_mcq_1788804769056" value="2"  />
+                      <span class="opt-key-badge">C</span>
+                      <span class="opt-content-text">Un elefante.</span>
+                    </label>
+                  
+                    <label class="mcq-option-label" data-opt-index="3">
+                      <input type="radio" name="q_mcq_1788804769056" value="3"  />
+                      <span class="opt-key-badge">D</span>
+                      <span class="opt-content-text"></span>
+                    </label>
+                  
+                </div>
+                <div class="mcq-feedback-panel ">
+                  <div class="feedback-indicator">
+                    <span class="indicator-icon">✓</span>
+                    <strong>Esito Risposta: Opzione C</strong>
+                  </div>
+                  <div class="feedback-explanation">la C.</div>
+                </div>
+              </div>
+            
+              <div class="mcq-item" data-question-id="mcq_1788804834511" data-correct="1">
+                <div class="mcq-question-title">
+                  <span class="mcq-index-tag">Domanda 3</span>
+                  <span class="mcq-question-text">Cosa fa il coniglietto quando vede che la tartaruga è rimasta molto indietro?</span>
+                </div>
+                <div class="mcq-options-grid">
+                  
+                    <label class="mcq-option-label" data-opt-index="0">
+                      <input type="radio" name="q_mcq_1788804834511" value="0"  />
+                      <span class="opt-key-badge">A</span>
+                      <span class="opt-content-text">Si ferma a mangiare dell&#039;erba.</span>
+                    </label>
+                  
+                    <label class="mcq-option-label" data-opt-index="1">
+                      <input type="radio" name="q_mcq_1788804834511" value="1"  />
+                      <span class="opt-key-badge">B</span>
+                      <span class="opt-content-text">Decide di schiacciare un pisolino all&#039;ombra di un albero.</span>
+                    </label>
+                  
+                    <label class="mcq-option-label" data-opt-index="2">
+                      <input type="radio" name="q_mcq_1788804834511" value="2"  />
+                      <span class="opt-key-badge">C</span>
+                      <span class="opt-content-text">Torna indietro ad aiutarla.</span>
+                    </label>
+                  
+                    <label class="mcq-option-label" data-opt-index="3">
+                      <input type="radio" name="q_mcq_1788804834511" value="3"  />
+                      <span class="opt-key-badge">D</span>
+                      <span class="opt-content-text"></span>
+                    </label>
+                  
+                </div>
+                <div class="mcq-feedback-panel ">
+                  <div class="feedback-indicator">
+                    <span class="indicator-icon">✓</span>
+                    <strong>Esito Risposta: Opzione B</strong>
+                  </div>
+                  <div class="feedback-explanation">la B</div>
+                </div>
+              </div>
+            
+              <div class="mcq-item" data-question-id="mcq_1788804903631" data-correct="1">
+                <div class="mcq-question-title">
+                  <span class="mcq-index-tag">Domanda 4</span>
+                  <span class="mcq-question-text">Cosa fa la tartaruga mentre il coniglietto dorme?</span>
+                </div>
+                <div class="mcq-options-grid">
+                  
+                    <label class="mcq-option-label" data-opt-index="0">
+                      <input type="radio" name="q_mcq_1788804903631" value="0"  />
+                      <span class="opt-key-badge">A</span>
+                      <span class="opt-content-text">Si ferma anche lei a riposare.</span>
+                    </label>
+                  
+                    <label class="mcq-option-label" data-opt-index="1">
+                      <input type="radio" name="q_mcq_1788804903631" value="1"  />
+                      <span class="opt-key-badge">B</span>
+                      <span class="opt-content-text">Continua a camminare senza mai fermarsi.</span>
+                    </label>
+                  
+                    <label class="mcq-option-label" data-opt-index="2">
+                      <input type="radio" name="q_mcq_1788804903631" value="2"  />
+                      <span class="opt-key-badge">C</span>
+                      <span class="opt-content-text">Decide di ritirarsi dalla gara.</span>
+                    </label>
+                  
+                    <label class="mcq-option-label" data-opt-index="3">
+                      <input type="radio" name="q_mcq_1788804903631" value="3"  />
+                      <span class="opt-key-badge">D</span>
+                      <span class="opt-content-text"></span>
+                    </label>
+                  
+                </div>
+                <div class="mcq-feedback-panel ">
+                  <div class="feedback-indicator">
+                    <span class="indicator-icon">✓</span>
+                    <strong>Esito Risposta: Opzione B</strong>
+                  </div>
+                  <div class="feedback-explanation">La B</div>
+                </div>
+              </div>
+            
+              <div class="mcq-item" data-question-id="mcq_1788804905098" data-correct="2">
+                <div class="mcq-question-title">
+                  <span class="mcq-index-tag">Domanda 5</span>
+                  <span class="mcq-question-text">Come finisce la storia?</span>
+                </div>
+                <div class="mcq-options-grid">
+                  
+                    <label class="mcq-option-label" data-opt-index="0">
+                      <input type="radio" name="q_mcq_1788804905098" value="0"  />
+                      <span class="opt-key-badge">A</span>
+                      <span class="opt-content-text"> Il coniglietto si sveglia in tempo e vince la gara.</span>
+                    </label>
+                  
+                    <label class="mcq-option-label" data-opt-index="1">
+                      <input type="radio" name="q_mcq_1788804905098" value="1"  />
+                      <span class="opt-key-badge">B</span>
+                      <span class="opt-content-text">La gara viene annullata dall&#039;elefante.</span>
+                    </label>
+                  
+                    <label class="mcq-option-label" data-opt-index="2">
+                      <input type="radio" name="q_mcq_1788804905098" value="2"  />
+                      <span class="opt-key-badge">C</span>
+                      <span class="opt-content-text">La tartaruga supera il coniglietto e vince la gara.</span>
+                    </label>
+                  
+                    <label class="mcq-option-label" data-opt-index="3">
+                      <input type="radio" name="q_mcq_1788804905098" value="3"  />
+                      <span class="opt-key-badge">D</span>
+                      <span class="opt-content-text"></span>
+                    </label>
+                  
+                </div>
+                <div class="mcq-feedback-panel ">
+                  <div class="feedback-indicator">
+                    <span class="indicator-icon">✓</span>
+                    <strong>Esito Risposta: Opzione C</strong>
+                  </div>
+                  <div class="feedback-explanation">La C</div>
+                </div>
+              </div>
+            
+          </div>
+
+          <div class="mcq-actions-toolbar no-print">
+            <button class="btn btn-mcq-check" onclick="checkAllMcqAnswers()">
+              <span>✓</span> Verifica Risposte
+            </button>
+            <button class="btn btn-mcq-reset" onclick="resetMcqAnswers()">
+              <span>↺</span> Reimposta
+            </button>
+            <span id="mcq-score-badge" class="mcq-score-badge" style="display:none;"></span>
+          </div>
+        </div>
+      </section>
+    
+
+      <!-- SESSION 3: OPEN QUESTIONS -->
+      
+      <section class="session-card session-open" id="session-open">
+        <div class="session-header-band open-band">
+          <div class="session-badge-pill open-badge">
+            <span class="badge-icon">✍️</span> PARTE 2 • DOMANDE A RISPOSTA APERTA
+          </div>
+          <h2 class="session-title">Domande di Riflessione e Sintesi</h2>
+          <p class="session-subtitle">Rispondi alle seguenti domande formulando risposte complete e chiare.</p>
+        </div>
+
+        <div class="session-body">
+          <div class="open-questions-list">
+            
+              <div class="open-q-card">
+                <div class="open-q-header">
+                  <span class="open-q-tag">Quesito 1</span>
+                  <div class="open-q-title-text">Qual&#039;è la morale della favola? Prova a scriverla in cinese</div>
+                </div>
+
+                <div class="open-q-notebook-field">
+                  <textarea class="notebook-textarea" placeholder="Scrivi qui la tua risposta..." rows="4"></textarea>
+                  
+                  <!-- Printable Notebook Ruled Lines -->
+                  <div class="notebook-print-lines">
+                    <div class="ruled-line"></div>
+                    <div class="ruled-line"></div>
+                    <div class="ruled-line"></div>
+                    <div class="ruled-line"></div>
+                  </div>
+                </div>
+
+                
+                  <div class="sample-model-wrapper ">
+                    <button type="button" class="btn-sample-toggle no-print" onclick="toggleSampleAnswer(this)">
+                      <span>💡 Mostra Risposta Modello (Docente)</span>
+                    </button>
+                    <div class="sample-model-box ">
+                      <div class="model-tag">Risposta modello / Guida didattica:</div>
+                      <p class="model-text">骄傲使人落后，坚持就是胜利。
+Ecco cosa significa nel dettaglio:
+*   **骄傲使人落后** (*jiāo&#039;ào shǐ rén luòhòu*): L&#039;arroganza (o la superbia) fa restare indietro.
+*   **坚持就是胜利** (*jiānchí jiùshì shènglì*): La costanza (o la perseveranza) porta alla vittoria.</p>
+                    </div>
+                  </div>
+                
+              </div>
+            
+          </div>
+        </div>
+      </section>
+    
+
+      <!-- SESSION 4: SUMMARY TASK -->
+      
+      <section class="session-card session-summary" id="session-summary">
+        <div class="session-header-band summary-band">
+          <div class="session-badge-pill summary-badge">
+            <span class="badge-icon">📝</span> PARTE 3 • COMPITO DI RIASSUNTO / TESTO LIBERO
+          </div>
+          <h2 class="session-title">Esercizio di Produzione Scritta e Sintesi</h2>
+          <p class="session-subtitle">Elabora un piccolo riassunto personale in base al brano letto rispettando la lunghezza raccomandata.</p>
+        </div>
+
+        <div class="session-body">
+          <!-- Writing Prompt Notice -->
+          <div class="summary-prompt-card">
+            <div class="prompt-icon-badge">📌</div>
+            <div class="prompt-details">
+              <h3 class="prompt-title">Consegna di Scrittura:</h3>
+              <p class="prompt-desc">Riassumi il brano mettendo in evidenza i punti salienti, le azioni principali e il messaggio chiave.</p>
+              
+              <div class="prompt-requirements">
+                <span class="req-chip">🎯 Lunghezza raccomandata: <strong>40 - 80 caratteri</strong></span>
+                <span class="req-chip">📐 Tipologia: Testo continuo di sintesi</span>
+              </div>
+            </div>
+          </div>
+
+          
+
+          <!-- Student Notebook Writing Area -->
+          <div class="notebook-writing-area">
+            <div class="notebook-area-header">
+              <label for="student-summary-input" class="notebook-label">
+                <span class="pen-icon">✍️</span> Foglio del Quaderno per la Scrittura:
+              </label>
+              <div class="unit-counter-badge no-print" id="unit-counter">
+                <span>Conteggio: </span>
+                <span id="counter-value" class="counter-number">0</span>
+                <span class="counter-unit">caratteri</span>
+                <span id="counter-status" class="counter-status-pill"></span>
+              </div>
+            </div>
+
+            <textarea 
+              id="student-summary-input" 
+              class="summary-notebook-textarea" 
+              rows="8" 
+              placeholder="Inizia a scrivere qui il tuo riassunto..." 
+              oninput="updateSummaryCounter()"></textarea>
+
+            <!-- Printable Ruled Notebook Lines -->
+            <div class="notebook-print-lines summary-print-lines">
+              <div class="ruled-line"></div><div class="ruled-line"></div><div class="ruled-line"></div><div class="ruled-line"></div><div class="ruled-line"></div><div class="ruled-line"></div><div class="ruled-line"></div><div class="ruled-line"></div><div class="ruled-line"></div>
+            </div>
+          </div>
+
+          
+            <div class="sample-model-wrapper " style="margin-top: 20px;">
+              <button type="button" class="btn-sample-toggle no-print" onclick="toggleSampleAnswer(this)">
+                <span>⭐ Mostra Esempio di Riassunto Modello</span>
+              </button>
+              <div class="sample-model-box summary-model ">
+                <div class="model-tag">Esempio di riassunto modello ottimale:</div>
+                <div class="model-summary-content">Esemp**Riassunto in cinese:**
+一只小白兔嘲笑乌龟爬得慢，于是它们决定赛跑，请大象当裁判。比赛开始后，小白兔跑得很快，因为它觉得乌龟追不上自己，就在树下睡着了。而乌龟虽然慢，却一直坚持努力地往前爬。最后，乌龟超过了睡觉的兔子，先到了终点，赢得了比赛。
+***
+**Traduzione del riassunto (per tuo riferimento):**
+*Un coniglietto bianco prende in giro una tartaruga perché è lenta, così decidono di fare una gara con l&#039;elefante come arbitro. Dopo l&#039;inizio, il coniglietto corre veloce ma, pensando che la tartaruga non possa raggiungerlo, si addormenta sotto un albero. La tartaruga, seppur lenta, continua a strisciare con perseveranza. Alla fine, la tartaruga supera il coniglio che dorme, arriva prima al traguardo e vince la gara.*io di riassunto modello...</div>
+              </div>
+            </div>
+          
+
+          
+            <div class="rubric-container">
+              <div class="rubric-header">Criteri di Valutazione per il Docente:</div>
+              <div class="rubric-grid">
+                
+                  <div class="rubric-card">
+                    <span class="rubric-num">#1</span>
+                    <span class="rubric-text">Pertinenza con il testo</span>
+                  </div>
+                
+                  <div class="rubric-card">
+                    <span class="rubric-num">#2</span>
+                    <span class="rubric-text">Accuratezza grammaticale</span>
+                  </div>
+                
+                  <div class="rubric-card">
+                    <span class="rubric-num">#3</span>
+                    <span class="rubric-text">Capacità di sintesi</span>
+                  </div>
+                
+              </div>
+            </div>
+          
+        </div>
+      </section>
+    
+
+      <!-- SESSION 5: VOCABULARY & GRAMMAR -->
+      
+      <section class="session-card session-vocab" id="session-vocab">
+        <div class="session-header-band vocab-band">
+          <div class="session-badge-pill vocab-badge">
+            <span class="badge-icon">📚</span> PARTE 4 • VOCABOLARIO & STRUTTURE CHIAVE
+          </div>
+          <h2 class="session-title">Glossario delle Parole Fondamentali</h2>
+          <p class="session-subtitle">Parole ed espressioni utili tratte dal brano con pronuncia e traduzione.</p>
+        </div>
+
+        <div class="session-body">
+          <div class="vocab-cards-grid">
+            
+              <div class="vocab-card-item">
+                <div class="vocab-word-term">小白兔 </div>
+                <div class="vocab-phonetic-term">xiǎo bái tù</div>
+                <div class="vocab-meaning-term">Coniglietto bianco.</div>
+              </div>
+            
+              <div class="vocab-card-item">
+                <div class="vocab-word-term">乌龟 </div>
+                <div class="vocab-phonetic-term">wū guī</div>
+                <div class="vocab-meaning-term">Tartaruga</div>
+              </div>
+            
+              <div class="vocab-card-item">
+                <div class="vocab-word-term">蹦蹦跳跳</div>
+                <div class="vocab-phonetic-term">bèng bèng tiào tiào</div>
+                <div class="vocab-meaning-term">Saltellare / Andare su e giù con gioia.</div>
+              </div>
+            
+              <div class="vocab-card-item">
+                <div class="vocab-word-term">慢吞吞</div>
+                <div class="vocab-phonetic-term">màn tūn tūn</div>
+                <div class="vocab-meaning-term">Lentamente / A passo di lumaca / Molto pigramente.</div>
+              </div>
+            
+              <div class="vocab-card-item">
+                <div class="vocab-word-term">嘲笑 </div>
+                <div class="vocab-phonetic-term">cháo xiào</div>
+                <div class="vocab-meaning-term">Prendere in giro / Schernire / Deridere.</div>
+              </div>
+            
+              <div class="vocab-card-item">
+                <div class="vocab-word-term">赛跑 </div>
+                <div class="vocab-phonetic-term">sài pǎo</div>
+                <div class="vocab-meaning-term">Gara di corsa.</div>
+              </div>
+            
+              <div class="vocab-card-item">
+                <div class="vocab-word-term">裁判 </div>
+                <div class="vocab-phonetic-term">cái pàn</div>
+                <div class="vocab-meaning-term">Arbitro / Giudice di gara.</div>
+              </div>
+            
+              <div class="vocab-card-item">
+                <div class="vocab-word-term">终点 </div>
+                <div class="vocab-phonetic-term">zhōng diǎn</div>
+                <div class="vocab-meaning-term">Traguardo / Punto d&#039;arrivo.</div>
+              </div>
+            
+              <div class="vocab-card-item">
+                <div class="vocab-word-term">冠军</div>
+                <div class="vocab-phonetic-term">guàn jūn</div>
+                <div class="vocab-meaning-term">Campione / Primo classificato.</div>
+              </div>
+            
+              <div class="vocab-card-item">
+                <div class="vocab-word-term">胜利</div>
+                <div class="vocab-phonetic-term">shèng lì</div>
+                <div class="vocab-meaning-term">Vittoria / Vincere.</div>
+              </div>
+            
+              <div class="vocab-card-item">
+                <div class="vocab-word-term">赶紧</div>
+                <div class="vocab-phonetic-term">gǎn jǐn</div>
+                <div class="vocab-meaning-term">In fretta / Affrettarsi.</div>
+              </div>
+            
+              <div class="vocab-card-item">
+                <div class="vocab-word-term">来不及 </div>
+                <div class="vocab-phonetic-term">ái bu jí</div>
+                <div class="vocab-meaning-term">Essere troppo tardi / Non fare in tempo</div>
+              </div>
+            
+          </div>
+
+          
+            <div class="grammar-callout-card">
+              <div class="grammar-callout-title">
+                <span>📌</span> Note Linguistiche e Grammaticali
+              </div>
+              <ul class="grammar-notes-list">
+                <li>Il raddoppiamento dei verbi (蹦蹦跳跳 - Bèng bèng tiào tiào):** In cinese, raddoppiare i verbi d&#039;azione o gli aggettivi (come *màn tūntūn* per &quot;lentamente&quot;) serve a rendere la descrizione più vivace, infantile o affettuosa. Qui enfatizza la gioia del coniglietto.</li><li>*   **L&#039;uso di &quot;Fratello Maggiore&quot; (大哥 - Dàgē):** Il coniglietto chiama la tartaruga *Wūguī dàgē*. In Cina, usare termini di parentela per persone (o animali!) non imparentati è comune. In questo caso, però, è usato con ironia e sarcasmo per sottolineare la lentezza della tartaruga.</li><li>*   **La struttura &quot;A nǎ shì B de duìshǒu&quot; (哪是...的对手):** Questa è una costruzione retorica. Significa letteralmente &quot;Dove mai A sarebbe l&#039;avversario di B?&quot;, ovvero &quot;A non è assolutamente all&#039;altezza di B&quot;.</li><li>*   **Il valore della costanza:** Questa storia è molto popolare nelle scuole cinesi per insegnare il valore del **jiānchí** (坚持 - perseveranza). Anche se si è meno dotati naturalmente (come la tartaruga), la costanza vince sul talento pigro.</li><li>*   **Grammatica - &quot;V + lái + V + qù&quot;:** Nel testo troviamo *pǎo lái pǎo qù* (correre avanti e indietro). Questa struttura indica un&#039;azione ripetuta o continua in varie direzioni.</li>
+              </ul>
+            </div>
+          
+        </div>
+      </section>
+    
+    </main>
+  </div>
+
+  <script>
+    const EXERCISE_DATA = {"targetText":"一只小白兔在草地上蹦蹦跳跳,  跑来跑去,玩得很开心。小白兔看见一只乌龟慢吞吞地 爬过来,就嘲笑说: “哎哟,我的 乌龟大哥,你走得太慢了!” 小白兔说: “一个人走有什么意思, 咱俩赛跑,你敢吗?\n“比就比,有什么 不敢的!”乌龟 声 气地回答。它们俩请来了大象做裁判,规定谁先 \n跑到终点,谁就是冠军。大象一甩鼻子,小白兔 和乌龟的比赛就开始了。小白兔三蹦两跳,就跑到了前边, 它回头看看,乌龟才爬了一小段路。小白兔心想:乌龟 哪是我的对手,我躺下 睡一觉吧!于是它躺到 树荫下,合上眼皮,真 的睡着了。小白兔心想:乌龟 哪是我的对手,我躺下 睡一觉吧!于是它躺到 树荫下,合上眼皮,真 的睡着了。再说乌龟,虽然爬 得很慢,但它却一个劲儿 地往前爬,终于超过了兔 子,离终点越来越近。小白兔一觉醒来,看 见乌龟就要到终点了,赶 紧去追,可是已经来不及 了。乌龟取得了胜利。","langCode":"zh-CN","mcqCount":5,"unitType":"caratteri","minUnits":40,"maxUnits":80};
+    let isSpeaking = false;
+    let isLargeFont = false;
+    let isRubyVisible = true;
+
+    // 1. Ruby Pinyin Interactive Toggle
+    function toggleRubyPinyin() {
+      const passage = document.getElementById('reading-passage-text');
+      const topLabel = document.getElementById('ruby-btn-label');
+      const innerLabel = document.getElementById('ruby-inner-label');
+      if (!passage) return;
+
+      isRubyVisible = !isRubyVisible;
+
+      if (isRubyVisible) {
+        passage.classList.remove('hide-ruby');
+        if (topLabel) topLabel.textContent = 'Pinyin Ruby: ATTIVO';
+        if (innerLabel) innerLabel.textContent = 'Nascondi Pinyin';
+      } else {
+        passage.classList.add('hide-ruby');
+        if (topLabel) topLabel.textContent = 'Pinyin Ruby: NASCOSTO';
+        if (innerLabel) innerLabel.textContent = 'Mostra Pinyin Ruby';
+      }
+    }
+
+    // 2. Speech Synthesis
+    function toggleAudioSpeech() {
+      if (!('speechSynthesis' in window)) {
+        alert('Il sintetizzatore vocale non è supportato in questo browser.');
+        return;
+      }
+      const synth = window.speechSynthesis;
+      const topLabel = document.getElementById('audio-label');
+      const readingLabel = document.getElementById('audio-reading-label');
+      const icon = document.getElementById('audio-icon');
+
+      const setSpeakingState = (speaking) => {
+        isSpeaking = speaking;
+        if (topLabel) topLabel.textContent = speaking ? 'Interrompi' : 'Ascolta Testo';
+        if (readingLabel) readingLabel.textContent = speaking ? 'Interrompi' : 'Ascolta';
+        if (icon) icon.textContent = speaking ? '⏹️' : '🔊';
+      };
+
+      if (isSpeaking) {
+        synth.cancel();
+        setSpeakingState(false);
+        return;
+      }
+
+      synth.cancel();
+      const utterance = new SpeechSynthesisUtterance(EXERCISE_DATA.targetText);
+      utterance.lang = EXERCISE_DATA.langCode;
+      utterance.rate = 0.85;
+
+      utterance.onend = () => setSpeakingState(false);
+      utterance.onerror = () => setSpeakingState(false);
+
+      synth.speak(utterance);
+      setSpeakingState(true);
+    }
+
+    // 3. Zoom Font Size
+    function toggleTextFontSize() {
+      const textEl = document.getElementById('reading-passage-text');
+      if (!textEl) return;
+      isLargeFont = !isLargeFont;
+      if (isLargeFont) {
+        textEl.classList.add('large-text');
+      } else {
+        textEl.classList.remove('large-text');
+      }
+    }
+
+    // 4. Translation Toggle
+    function toggleTranslationBox() {
+      const box = document.getElementById('translation-callout');
+      const btn = document.getElementById('trans-btn-label');
+      if (!box) return;
+      const isHidden = box.style.display === 'none';
+      box.style.display = isHidden ? 'block' : 'none';
+      if (btn) btn.textContent = isHidden ? 'Nascondi Traduzione' : 'Traduzione';
+    }
+
+    // 5. Toggle Sample Answers
+    function toggleSampleAnswer(btn) {
+      const parent = btn.closest('.sample-model-wrapper');
+      if (parent) {
+        const box = parent.querySelector('.sample-model-box');
+        if (box) {
+          box.classList.toggle('show');
+        }
+      }
+    }
+
+    // 6. MCQ Checker
+    function checkAllMcqAnswers() {
+      const items = document.querySelectorAll('.mcq-item');
+      let score = 0;
+      let total = items.length;
+
+      items.forEach((item) => {
+        const correctIndex = parseInt(item.getAttribute('data-correct') || '0', 10);
+        const selectedRadio = item.querySelector('input[type="radio"]:checked');
+        const feedback = item.querySelector('.mcq-feedback-panel');
+
+        if (feedback) {
+          feedback.classList.add('visible');
+          if (selectedRadio && parseInt(selectedRadio.value, 10) === correctIndex) {
+            score++;
+            feedback.className = 'mcq-feedback-panel visible correct-state';
+            const icon = feedback.querySelector('.indicator-icon');
+            if (icon) icon.textContent = '✓';
+          } else {
+            feedback.className = 'mcq-feedback-panel visible incorrect-state';
+            const icon = feedback.querySelector('.indicator-icon');
+            if (icon) icon.textContent = '✗';
+          }
+        }
+      });
+
+      const scoreBadge = document.getElementById('mcq-score-badge');
+      if (scoreBadge) {
+        scoreBadge.style.display = 'inline-block';
+        scoreBadge.textContent = '🎯 Punteggio: ' + score + ' / ' + total + ' (' + Math.round((score / total) * 100) + '%)';
+      }
+    }
+
+    function resetMcqAnswers() {
+      const radios = document.querySelectorAll('.mcq-options-grid input[type="radio"]');
+      radios.forEach((r) => (r.checked = false));
+
+      const feedbacks = document.querySelectorAll('.mcq-feedback-panel');
+      feedbacks.forEach((f) => {
+        f.className = 'mcq-feedback-panel';
+      });
+
+      const scoreBadge = document.getElementById('mcq-score-badge');
+      if (scoreBadge) scoreBadge.style.display = 'none';
+    }
+
+    // 7. Live Summary Unit Counter
+    function updateSummaryCounter() {
+      const input = document.getElementById('student-summary-input');
+      const counterVal = document.getElementById('counter-value');
+      const statusTag = document.getElementById('counter-status');
+      if (!input || !counterVal) return;
+
+      const text = input.value.trim();
+      let count = 0;
+
+      if (EXERCISE_DATA.unitType === 'caratteri') {
+        count = text.replace(/\s+/g, '').length;
+      } else {
+        count = text ? text.split(/\s+/).filter(Boolean).length : 0;
+      }
+
+      counterVal.textContent = count;
+
+      if (statusTag && EXERCISE_DATA.minUnits > 0) {
+        if (count === 0) {
+          statusTag.textContent = '';
+          statusTag.className = 'counter-status-pill';
+        } else if (count < EXERCISE_DATA.minUnits) {
+          statusTag.textContent = 'Troppo breve (min. ' + EXERCISE_DATA.minUnits + ')';
+          statusTag.className = 'counter-status-pill status-short';
+        } else if (EXERCISE_DATA.maxUnits > 0 && count > EXERCISE_DATA.maxUnits) {
+          statusTag.textContent = 'Supera il limite (max. ' + EXERCISE_DATA.maxUnits + ')';
+          statusTag.className = 'counter-status-pill status-long';
+        } else {
+          statusTag.textContent = '✓ Lunghezza ideale';
+          statusTag.className = 'counter-status-pill status-ok';
+        }
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      updateSummaryCounter();
+    });
+  </script>
+</body>
+</html>

@@ -1,17 +1,1775 @@
-<div style="width: 100%; max-width: 440px; font-family: system-ui, -apple-system, sans-serif;">
-    <h3 style="margin: 0 0 12px; color: #1a1a1a; font-size: 18px;">Flashcard Poesie: Storie Tradizionali (古诗)</h3>
-    <p style="color: #666; font-size: 14px; margin-bottom: 20px;">Tocca la carta per scoprire la traduzione e il pinyin del verso poetico.</p>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Presentato a Liu Jingwen — Scheda di Comprensione</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --font-main: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --font-cjk: 'Noto Sans SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-handwriting: 'Kalam', cursive, sans-serif;
 
-    <div onclick="this.classList.toggle('flipped')" style="background: linear-gradient(135deg, #00dc64, #00b34e); border-radius: 12px; padding: 28px 16px; color: white; text-align: center; cursor: pointer; box-shadow: 0 4px 12px rgba(0,220,100,0.25); margin-bottom: 20px;">
-        <div style="font-size: 28px; font-weight: bold; margin-bottom: 8px;">静夜思</div>
-        <div style="font-size: 18px; margin-bottom: 12px;">床前明月光，疑是地上霜。</div>
-        <div style="font-size: 13px; opacity: 0.9; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 10px;">
-            <em>(Tocca per girare la carta)</em>
+      /* Page Canvas */
+      --bg-page: #f6f5f1;
+      --bg-card: #ffffff;
+      --border-light: #e5e3dc;
+      --text-dark: #1f2937;
+      --text-sub: #4b5563;
+      --text-muted: #6b7280;
+
+      /* COLOR CODED SESSIONS */
+      /* 1. Reading Session (Sage & Emerald) */
+      --session-reading-bg: #f0fdfa;
+      --session-reading-border: #99f6e4;
+      --session-reading-primary: #0f766e;
+      --session-reading-dark: #115e59;
+      --session-reading-badge: #ccfbf1;
+
+      /* 2. Multiple Choice Session (Royal Blue & Indigo) */
+      --session-mcq-bg: #eff6ff;
+      --session-mcq-border: #bfdbfe;
+      --session-mcq-primary: #1d4ed8;
+      --session-mcq-dark: #1e40af;
+      --session-mcq-badge: #dbeafe;
+
+      /* 3. Open Questions Session (Amethyst & Violet) */
+      --session-open-bg: #f5f3ff;
+      --session-open-border: #ddd6fe;
+      --session-open-primary: #6d28d9;
+      --session-open-dark: #5b21b6;
+      --session-open-badge: #ede9fe;
+
+      /* 4. Summary Session (Warm Amber & Gold) */
+      --session-summary-bg: #fffbeb;
+      --session-summary-border: #fde68a;
+      --session-summary-primary: #b45309;
+      --session-summary-dark: #92400e;
+      --session-summary-badge: #fef3c7;
+
+      /* 5. Vocab Session (Teal & Cyan) */
+      --session-vocab-bg: #f0f9ff;
+      --session-vocab-border: #bae6fd;
+      --session-vocab-primary: #0369a1;
+      --session-vocab-dark: #075985;
+      --session-vocab-badge: #e0f2fe;
+
+      /* Notebook Ruled Line Colors */
+      --notebook-paper-bg: #fffdf9;
+      --notebook-line-blue: #dbeafe;
+      --notebook-line-gray: #e2e8f0;
+      --notebook-red-margin: #f87171;
+      --notebook-hole: #cbd5e1;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background-color: var(--bg-page);
+      color: var(--text-dark);
+      line-height: 1.6;
+      padding: 24px 16px 80px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* TOP SCREEN BAR */
+    .screen-control-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding: 12px 18px;
+      background: #ffffff;
+      border: 1px solid var(--border-light);
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    .bar-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-sub);
+    }
+
+    .bar-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-decoration: none;
+    }
+
+    .btn-print {
+      background: #1e293b;
+      color: #ffffff;
+    }
+    .btn-print:hover {
+      background: #0f172a;
+    }
+
+    .btn-tool {
+      background: #ffffff;
+      color: var(--text-dark);
+      border-color: #d1d5db;
+    }
+    .btn-tool:hover {
+      background: #f3f4f6;
+    }
+
+    /* WORKSHEET MASTER HEADER */
+    .worksheet-header-card {
+      background: #ffffff;
+      border: 2px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 24px 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+      position: relative;
+    }
+
+    .header-pills-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .pill-lang {
+      background: var(--session-reading-bg);
+      color: var(--session-reading-primary);
+      border: 1px solid var(--session-reading-border);
+      font-weight: 700;
+      font-size: 12px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .pill-level {
+      background: #f1f5f9;
+      color: #334155;
+      font-weight: 600;
+      font-size: 12px;
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+
+    .pill-version {
+      font-weight: 700;
+      font-size: 12px;
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+    .version-student {
+      background: #ecfdf5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+    }
+    .version-teacher {
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fde68a;
+    }
+
+    .worksheet-main-title {
+      font-size: 24px;
+      font-weight: 800;
+      color: #0f172a;
+      line-height: 1.25;
+      margin-bottom: 4px;
+    }
+
+    .worksheet-target-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #64748b;
+      font-family: var(--font-cjk);
+      margin-bottom: 18px;
+    }
+
+    /* Student Notebook Info Bar */
+    .student-info-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 16px;
+      border-top: 1px dashed #cbd5e1;
+      padding-top: 16px;
+    }
+
+    .student-info-field {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .student-info-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #64748b;
+    }
+
+    .student-info-line {
+      height: 22px;
+      border-bottom: 1px solid #94a3b8;
+    }
+
+    /* ===================================================
+       SESSION COLOR CARD SYSTEM
+       =================================================== */
+    .session-card {
+      background: #ffffff;
+      border-radius: 16px;
+      margin-bottom: 28px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+      overflow: hidden;
+      border: 2px solid;
+    }
+
+    .session-header-band {
+      padding: 20px 24px 16px;
+      border-bottom: 1px solid;
+    }
+
+    .session-badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .session-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1e293b;
+      line-height: 1.3;
+      margin-bottom: 4px;
+    }
+
+    .session-subtitle {
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    .session-body {
+      padding: 24px;
+    }
+
+    /* 1. READING SESSION COLORS */
+    .session-reading {
+      border-color: var(--session-reading-border);
+    }
+    .reading-band {
+      background: var(--session-reading-bg);
+      border-bottom-color: var(--session-reading-border);
+    }
+    .reading-badge {
+      background: #ffffff;
+      color: var(--session-reading-primary);
+      border: 1px solid var(--session-reading-border);
+    }
+
+    /* 2. MCQ SESSION COLORS */
+    .session-mcq {
+      border-color: var(--session-mcq-border);
+    }
+    .mcq-band {
+      background: var(--session-mcq-bg);
+      border-bottom-color: var(--session-mcq-border);
+    }
+    .mcq-badge {
+      background: #ffffff;
+      color: var(--session-mcq-primary);
+      border: 1px solid var(--session-mcq-border);
+    }
+
+    /* 3. OPEN QUESTIONS SESSION COLORS */
+    .session-open {
+      border-color: var(--session-open-border);
+    }
+    .open-band {
+      background: var(--session-open-bg);
+      border-bottom-color: var(--session-open-border);
+    }
+    .open-badge {
+      background: #ffffff;
+      color: var(--session-open-primary);
+      border: 1px solid var(--session-open-border);
+    }
+
+    /* 4. SUMMARY SESSION COLORS */
+    .session-summary {
+      border-color: var(--session-summary-border);
+    }
+    .summary-band {
+      background: var(--session-summary-bg);
+      border-bottom-color: var(--session-summary-border);
+    }
+    .summary-badge {
+      background: #ffffff;
+      color: var(--session-summary-primary);
+      border: 1px solid var(--session-summary-border);
+    }
+
+    /* 5. VOCAB SESSION COLORS */
+    .session-vocab {
+      border-color: var(--session-vocab-border);
+    }
+    .vocab-band {
+      background: var(--session-vocab-bg);
+      border-bottom-color: var(--session-vocab-border);
+    }
+    .vocab-badge {
+      background: #ffffff;
+      color: var(--session-vocab-primary);
+      border: 1px solid var(--session-vocab-border);
+    }
+
+    /* ===================================================
+       ACADEMIC READING PASSAGE SHEET (WIDE, AIRY & READABLE)
+       =================================================== */
+    .reading-passage-sheet {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 32px 36px;
+      margin-bottom: 20px;
+      font-family: var(--font-cjk);
+      font-size: 19px;
+      color: #18181b;
+      line-height: 2.15;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.02);
+      width: 100%;
+      box-sizing: border-box;
+      transition: all 0.2s ease;
+    }
+
+    .reading-passage-sheet.large-text {
+      font-size: 22px;
+      line-height: 2.35;
+    }
+
+    .reading-paragraph {
+      margin-bottom: 1.5rem;
+      text-align: justify;
+      text-justify: inter-ideograph;
+      text-indent: 2em; /* Standard academic Chinese indentation */
+      word-break: break-all;
+    }
+
+    .reading-paragraph:last-child {
+      margin-bottom: 0;
+    }
+
+    /* For non-Chinese languages (Korean, Russian) that do not use paragraph indentation */
+    .reading-passage-sheet.no-indent .reading-paragraph {
+      text-indent: 0;
+      word-break: normal;
+    }
+
+    /* RUBY PINYIN STYLING */
+    ruby.cjk-ruby, ruby {
+      ruby-position: over;
+      ruby-align: center;
+      display: inline-ruby;
+      margin: 0;
+      padding: 0 1px;
+    }
+
+    ruby.cjk-ruby rt, ruby rt {
+      font-family: 'Noto Sans SC', system-ui, sans-serif;
+      font-size: 0.52em;
+      font-weight: 600;
+      color: #92400e; /* Deep amber for crisp Pinyin legibility */
+      line-height: 1;
+      text-align: center;
+      user-select: none;
+      letter-spacing: normal;
+    }
+
+    /* When Ruby is toggled OFF (pure Hanzi view) */
+    .reading-passage-sheet.hide-ruby rt {
+      display: none !important;
+    }
+    .reading-passage-sheet.hide-ruby,
+    .reading-passage-sheet.hide-ruby .reading-paragraph {
+      line-height: 1.85 !important;
+    }
+
+    /* Reading Controls Toolbar */
+    .reading-toolbar-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .reading-status-tag {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--session-reading-dark);
+      background: var(--session-reading-bg);
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--session-reading-border);
+    }
+
+    .reading-button-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn-ruby-toggle {
+      background: #fffbeb;
+      color: #92400e;
+      border: 1px solid #fde68a;
+      font-weight: 700;
+    }
+    .btn-ruby-toggle:hover {
+      background: #fef3c7;
+    }
+
+    /* Support Boxes (Translation / Phonetics block) */
+    .phonetic-raw-box {
+      background: #fdfbf7;
+      border: 1px solid #f5ede1;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-top: 14px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: #78350f;
+      line-height: 1.6;
+      white-space: pre-line;
+    }
+
+    .translation-callout-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-top: 14px;
+      font-size: 14px;
+      color: #334155;
+      line-height: 1.6;
+    }
+
+    .callout-header-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #64748b;
+      margin-bottom: 4px;
+    }
+
+    /* ===================================================
+       MULTIPLE CHOICE STYLING
+       =================================================== */
+    .mcq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .mcq-item {
+      background: #fafbfc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 18px;
+      transition: all 0.15s ease;
+    }
+    .mcq-item:hover {
+      border-color: #cbd5e1;
+      background: #ffffff;
+    }
+
+    .mcq-question-title {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 14px;
+    }
+
+    .mcq-index-tag {
+      background: var(--session-mcq-bg);
+      color: var(--session-mcq-primary);
+      border: 1px solid var(--session-mcq-border);
+      font-size: 11px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .mcq-options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .mcq-option-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.12s ease;
+    }
+    .mcq-option-label:hover {
+      background: #eff6ff;
+      border-color: #93c5fd;
+    }
+
+    .mcq-option-label input[type="radio"] {
+      cursor: pointer;
+      accent-color: var(--session-mcq-primary);
+      width: 16px;
+      height: 16px;
+    }
+
+    .opt-key-badge {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      background: #f1f5f9;
+      color: #475569;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .opt-content-text {
+      flex: 1;
+      color: #1e293b;
+    }
+
+    /* MCQ Feedback */
+    .mcq-feedback-panel {
+      display: none;
+      margin-top: 14px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+    }
+    .mcq-feedback-panel.visible {
+      display: block;
+    }
+    .mcq-feedback-panel.correct-state {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: #166534;
+    }
+    .mcq-feedback-panel.incorrect-state {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #991b1b;
+    }
+
+    .feedback-indicator {
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .feedback-explanation {
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .mcq-actions-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 24px;
+      padding-top: 18px;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .btn-mcq-check {
+      background: var(--session-mcq-primary);
+      color: #ffffff;
+      padding: 8px 18px;
+      font-size: 14px;
+    }
+    .btn-mcq-check:hover {
+      background: var(--session-mcq-dark);
+    }
+
+    .btn-mcq-reset {
+      background: #ffffff;
+      color: #475569;
+      border-color: #cbd5e1;
+    }
+    .btn-mcq-reset:hover {
+      background: #f8fafc;
+    }
+
+    .mcq-score-badge {
+      font-size: 14px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: var(--session-mcq-primary);
+      border: 1px solid #bfdbfe;
+    }
+
+    /* ===================================================
+       OPEN QUESTIONS STYLING
+       =================================================== */
+    .open-questions-list {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .open-q-card {
+      background: #fafbfc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .open-q-header {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .open-q-tag {
+      background: var(--session-open-bg);
+      color: var(--session-open-primary);
+      border: 1px solid var(--session-open-border);
+      font-size: 11px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    .open-q-title-text {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .open-q-notebook-field {
+      position: relative;
+    }
+
+    .notebook-textarea {
+      width: 100%;
+      padding: 12px 14px;
+      font-family: inherit;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #1e293b;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      resize: vertical;
+    }
+    .notebook-textarea:focus {
+      outline: none;
+      border-color: var(--session-open-primary);
+      box-shadow: 0 0 0 2px var(--session-open-bg);
+    }
+
+    /* Notebook Ruled lines for handwriting / print */
+    .notebook-print-lines {
+      display: none;
+    }
+    .ruled-line {
+      border-bottom: 1px solid #cbd5e1;
+      height: 32px;
+    }
+
+    .sample-model-wrapper {
+      margin-top: 10px;
+    }
+
+    .btn-sample-toggle {
+      background: none;
+      border: none;
+      color: var(--session-open-primary);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 4px 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .btn-sample-toggle:hover {
+      text-decoration: underline;
+    }
+
+    .sample-model-box {
+      display: none;
+      margin-top: 8px;
+      padding: 12px 16px;
+      background: var(--session-open-bg);
+      border: 1px solid var(--session-open-border);
+      border-radius: 8px;
+      font-size: 13px;
+      color: var(--session-open-dark);
+    }
+    .sample-model-box.show, .sample-model-wrapper.always-open .sample-model-box {
+      display: block;
+    }
+
+    .model-tag {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    /* ===================================================
+       SUMMARY TASK STYLING
+       =================================================== */
+    .summary-prompt-card {
+      display: flex;
+      gap: 14px;
+      background: var(--session-summary-bg);
+      border: 1px solid var(--session-summary-border);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 18px;
+    }
+
+    .prompt-icon-badge {
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .prompt-title {
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--session-summary-dark);
+      margin-bottom: 4px;
+    }
+
+    .prompt-desc {
+      font-size: 14px;
+      color: #78350f;
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+
+    .prompt-requirements {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .req-chip {
+      background: #ffffff;
+      border: 1px solid #fde68a;
+      border-radius: 999px;
+      padding: 3px 10px;
+      font-size: 12px;
+      color: #92400e;
+    }
+
+    .summary-keypoints-card {
+      background: #fafaf9;
+      border: 1px solid #e7e5e4;
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin-bottom: 18px;
+      font-size: 13px;
+    }
+
+    .keypoints-title {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #57534e;
+      margin-bottom: 6px;
+    }
+
+    .keypoints-list {
+      padding-left: 18px;
+      color: #292524;
+    }
+
+    .notebook-writing-area {
+      background: #ffffff;
+      border: 2px solid #fed7aa;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: inset 0 0 8px rgba(0,0,0,0.02);
+    }
+
+    .notebook-area-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .notebook-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: #78350f;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .unit-counter-badge {
+      font-size: 12px;
+      font-weight: 600;
+      color: #57534e;
+    }
+
+    .counter-number {
+      font-family: var(--font-mono);
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .counter-status-pill {
+      margin-left: 6px;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .status-ok { background: #dcfce7; color: #15803d; }
+    .status-short { background: #fef9c3; color: #854d0e; }
+    .status-long { background: #fee2e2; color: #991b1b; }
+
+    .summary-notebook-textarea {
+      width: 100%;
+      padding: 14px;
+      font-family: var(--font-cjk);
+      font-size: 16px;
+      line-height: 1.8;
+      background: #fffdfa;
+      border: 1px solid #fed7aa;
+      border-radius: 8px;
+      resize: vertical;
+      color: #1c1917;
+    }
+    .summary-notebook-textarea:focus {
+      outline: none;
+      border-color: var(--session-summary-primary);
+      box-shadow: 0 0 0 2px #fef3c7;
+    }
+
+    .model-summary-content {
+      font-family: var(--font-cjk);
+      font-size: 15px;
+      line-height: 1.75;
+      color: #1c1917;
+      margin-top: 4px;
+      white-space: pre-line;
+    }
+
+    .rubric-container {
+      margin-top: 24px;
+      padding: 16px;
+      background: #fafaf9;
+      border: 1px solid #e7e5e4;
+      border-radius: 10px;
+    }
+
+    .rubric-header {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #78716c;
+      margin-bottom: 10px;
+    }
+
+    .rubric-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 8px;
+    }
+
+    .rubric-card {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      background: #ffffff;
+      border: 1px solid #e7e5e4;
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-size: 12px;
+      color: #44403c;
+    }
+
+    .rubric-num {
+      font-family: var(--font-mono);
+      font-weight: 800;
+      color: #a8a29e;
+      font-size: 11px;
+    }
+
+    /* ===================================================
+       VOCABULARY STYLING
+       =================================================== */
+    .vocab-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 12px;
+    }
+
+    .vocab-card-item {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-left: 4px solid var(--session-vocab-primary);
+      border-radius: 8px;
+      padding: 12px 14px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+
+    .vocab-word-term {
+      font-family: var(--font-cjk);
+      font-size: 17px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 2px;
+    }
+
+    .vocab-phonetic-term {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: #d97706;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .vocab-meaning-term {
+      font-size: 13px;
+      color: #475569;
+    }
+
+    .grammar-callout-card {
+      margin-top: 20px;
+      padding: 16px 20px;
+      background: var(--session-vocab-bg);
+      border: 1px solid var(--session-vocab-border);
+      border-radius: 10px;
+    }
+
+    .grammar-callout-title {
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--session-vocab-dark);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .grammar-notes-list {
+      padding-left: 18px;
+      color: #0369a1;
+      font-size: 13px;
+    }
+
+    /* ===================================================
+       PRINT STYLES
+       =================================================== */
+    @media print {
+      body {
+        background: #ffffff;
+        color: #000000;
+        padding: 0;
+        font-size: 11pt;
+      }
+
+      .no-print {
+        display: none !important;
+      }
+
+      .container {
+        max-width: 100%;
+        margin: 0;
+      }
+
+      .session-card, .worksheet-header-card {
+        box-shadow: none !important;
+        page-break-inside: avoid;
+        margin-bottom: 18pt;
+        border-width: 1.5pt !important;
+      }
+
+      .reading-passage-sheet {
+        border: none !important;
+        padding: 8pt 0 !important;
+        box-shadow: none !important;
+        font-size: 13pt !important;
+        line-height: 2.1 !important;
+      }
+      .reading-passage-sheet.hide-ruby,
+      .reading-passage-sheet.hide-ruby .reading-paragraph {
+        line-height: 1.75 !important;
+      }
+
+      .notebook-textarea, .summary-notebook-textarea {
+        display: none !important;
+      }
+
+      .notebook-print-lines {
+        display: block !important;
+        margin-top: 8pt;
+      }
+
+      .sample-model-box {
+        display: block !important;
+        background: #fbfbfb !important;
+        border: 1pt dashed #999999 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Top Action Toolbar (Screen Only) -->
+    <header class="screen-control-bar no-print">
+      <div class="bar-left">
+        <span>Scheda Didattica con Quaderno</span>
+        <span>•</span>
+        <span>🇨🇳 Cinese (Mandarin)</span>
+      </div>
+      <div class="bar-right">
+        
+          <button class="btn btn-ruby-toggle" onclick="toggleRubyPinyin()" id="btn-ruby-toggle" title="Attiva/Disattiva Pinyin sopra i caratteri">
+            <span id="ruby-btn-icon">🔤</span> <span id="ruby-btn-label">Pinyin Ruby: ATTIVO</span>
+          </button>
+        
+
+        <button class="btn btn-tool" onclick="toggleAudioSpeech()" id="btn-audio-speech">
+          <span id="audio-icon">🔊</span> <span id="audio-label">Ascolta Testo</span>
+        </button>
+        
+        <button class="btn btn-tool" onclick="toggleTextFontSize()">
+          <span>🗚</span> Zoom
+        </button>
+
+        <button class="btn btn-print" onclick="window.print()">
+          <span>🖨️</span> Stampa / Salva PDF
+        </button>
+      </div>
+    </header>
+
+    <!-- Master Worksheet Header -->
+    <div class="worksheet-header-card">
+      <div class="header-pills-row">
+        <span class="pill-lang">🇨🇳 Cinese (Mandarin)</span>
+        <span class="pill-level">HSK 2</span>
+        <span class="pill-level">Tema: Baby Bus・Studi cinesi</span>
+        <span class="pill-version version-student">
+          👤 Versione Studente
+        </span>
+      </div>
+
+      <h1 class="worksheet-main-title">Presentato a Liu Jingwen</h1>
+      <div class="worksheet-target-title">赠刘景文</div>
+
+      <!-- Student Fields for Classroom -->
+      <div class="student-info-grid">
+        <div class="student-info-field">
+          <span class="student-info-label">Nome e Cognome Studente</span>
+          <div class="student-info-line"></div>
         </div>
+        <div class="student-info-field">
+          <span class="student-info-label">Data</span>
+          <div class="student-info-line"></div>
+        </div>
+        <div class="student-info-field">
+          <span class="student-info-label">Punteggio / Valutazione</span>
+          <div class="student-info-line"></div>
+        </div>
+      </div>
     </div>
 
-    <div style="background: #f8f9fa; padding: 14px; border-radius: 8px; border: 1px solid #e5e5e5; font-size: 13px; line-height: 1.5; color: #444;">
-        <strong>Pinyin:</strong> Chuáng qián míng yuè guāng, yí shì dì shàng shuāng.<br>
-        <strong>Significato:</strong> "Davanti al letto la chiara luce lunare, sembra brina caduta sulla terra." (Li Bai)
-    </div>
-</div>
+    <!-- MAIN EXERCISE CONTENT -->
+    <main>
+      <!-- SESSION 1: READING PASSAGE (FULL-WIDTH, NATURAL & SPACIOUS) -->
+      <article class="session-card session-reading" id="session-reading">
+        <div class="session-header-band reading-band">
+          <div class="session-badge-pill reading-badge">
+            <span class="badge-icon">📖</span> SESSIONE LETTURA • TESTO DEL BRANO
+          </div>
+          <h2 class="session-title">Brano da Leggere (Cinese (Mandarin))</h2>
+          <div class="worksheet-target-title" style="margin-top: 2px; margin-bottom: 6px;">赠刘景文</div>
+          <p class="session-subtitle">Leggi con cura il testo seguente prima di rispondere alle domande di comprensione.</p>
+        </div>
+
+        <div class="session-body">
+          <div class="reading-toolbar-row no-print">
+            <div class="reading-status-tag">
+              Format: Testo con Pinyin Ruby interattivo
+            </div>
+
+            <div class="reading-button-group">
+              
+                <button class="btn btn-ruby-toggle" onclick="toggleRubyPinyin()" id="btn-ruby-inner" title="Mostra o nascondi il Pinyin sopra i caratteri">
+                  <span>🔤</span> <span id="ruby-inner-label">Nascondi Pinyin</span>
+                </button>
+              
+
+              <button class="btn btn-tool" onclick="toggleAudioSpeech()" id="btn-audio-reading">
+                <span>🔊</span> <span id="audio-reading-label">Ascolta</span>
+              </button>
+
+              <button class="btn btn-tool" onclick="toggleTextFontSize()" title="Ingrandisci dimensione testo">
+                <span>🗚</span> Zoom
+              </button>
+
+              
+                <button class="btn btn-tool" onclick="toggleTranslationBox()" id="btn-trans-toggle">
+                  <span>🇮🇹</span> <span id="trans-btn-label">Traduzione</span>
+                </button>
+              
+            </div>
+          </div>
+
+          <!-- AMPIO E LIMPIDO FOGLIO DI LETTURA A TUTTA LARGHEZZA -->
+          <div 
+            class="reading-passage-sheet  " 
+            id="reading-passage-text"
+          >
+            <p class="reading-paragraph"><ruby class="cjk-ruby"><rb>荷</rb><rt>hé</rt></ruby><ruby class="cjk-ruby"><rb>尽</rb><rt>jìn</rt></ruby><ruby class="cjk-ruby"><rb>已</rb><rt>yí</rt></ruby><ruby class="cjk-ruby"><rb>无</rb><rt>wú</rt></ruby><ruby class="cjk-ruby"><rb>擎</rb><rt>qíng</rt></ruby><ruby class="cjk-ruby"><rb>雨</rb><rt>yǔ</rt></ruby><ruby class="cjk-ruby"><rb>盖</rb><rt>gài</rt></ruby>,</p>
+<p class="reading-paragraph"><ruby class="cjk-ruby"><rb>菊</rb><rt>jú</rt></ruby><ruby class="cjk-ruby"><rb>残</rb><rt>cán</rt></ruby><ruby class="cjk-ruby"><rb>犹</rb><rt>you</rt></ruby><ruby class="cjk-ruby"><rb>有</rb><rt>you</rt></ruby><ruby class="cjk-ruby"><rb>傲</rb><rt>ào</rt></ruby><ruby class="cjk-ruby"><rb>霜</rb><rt>shung</rt></ruby><ruby class="cjk-ruby"><rb>枝</rb><rt>zhi</rt></ruby>。</p>
+<p class="reading-paragraph"><ruby class="cjk-ruby"><rb>一</rb><rt>yì</rt></ruby><ruby class="cjk-ruby"><rb>年</rb><rt>nián</rt></ruby><ruby class="cjk-ruby"><rb>好</rb><rt>hǎo</rt></ruby><ruby class="cjk-ruby"><rb>景</rb><rt>jǐng</rt></ruby><ruby class="cjk-ruby"><rb>君</rb><rt>jūn</rt></ruby><ruby class="cjk-ruby"><rb>须</rb><rt>xū</rt></ruby><ruby class="cjk-ruby"><rb>记</rb><rt>ji</rt></ruby></p>
+<p class="reading-paragraph"><ruby class="cjk-ruby"><rb>最</rb><rt>zui</rt></ruby><ruby class="cjk-ruby"><rb>是</rb><rt>shì</rt></ruby><ruby class="cjk-ruby"><rb>橙</rb><rt>chéng</rt></ruby><ruby class="cjk-ruby"><rb>黄</rb><rt>huáng</rt></ruby><ruby class="cjk-ruby"><rb>橘</rb><rt>jú</rt></ruby><ruby class="cjk-ruby"><rb>绿</rb><rt>lǜ</rt></ruby><ruby class="cjk-ruby"><rb>时</rb><rt>shí</rt></ruby>。</p>
+          </div>
+
+          <!-- Support: Italian Translation -->
+          
+            <div class="translation-callout-box" id="translation-callout" style="display:none;">
+              <div class="callout-header-label">Traduzione in Italiano:</div>
+              <p>Il carico è sparito e non è rimasta più la copertura antipioggia,
+Ci sono ancora orgogliosi rami di brina tra i crisantemi.
+Cosa devi ricordare di un buon anno
+È il momento più arancione-giallo-arancio-verde.</p>
+            </div>
+          
+
+          <!-- Support: Raw Phonetic block (if non-chinese or supplementary) -->
+          
+        </div>
+      </article>
+
+      <!-- SESSION 2: MULTIPLE CHOICE QUESTIONS -->
+      
+      <section class="session-card session-mcq" id="session-mcq">
+        <div class="session-header-band mcq-band">
+          <div class="session-badge-pill mcq-badge">
+            <span class="badge-icon">❓</span> PARTE 1 • DOMANDE A RISPOSTA MULTIPLA
+          </div>
+          <h2 class="session-title">Verifica della Comprensione del Testo</h2>
+          <p class="session-subtitle">Leggi attentamente ciascuna domanda e seleziona l'opzione corretta tra le quattro proposte.</p>
+        </div>
+
+        <div class="session-body">
+          <div class="mcq-list">
+            
+              <div class="mcq-item" data-question-id="mcq_1788803312193" data-correct="2">
+                <div class="mcq-question-title">
+                  <span class="mcq-index-tag">Domanda 1</span>
+                  <span class="mcq-question-text">A quale stagione si riferisce principalmente la poesia?</span>
+                </div>
+                <div class="mcq-options-grid">
+                  
+                    <label class="mcq-option-label" data-opt-index="0">
+                      <input type="radio" name="q_mcq_1788803312193" value="0"  />
+                      <span class="opt-key-badge">A</span>
+                      <span class="opt-content-text">Primavera (春天)</span>
+                    </label>
+                  
+                    <label class="mcq-option-label" data-opt-index="1">
+                      <input type="radio" name="q_mcq_1788803312193" value="1"  />
+                      <span class="opt-key-badge">B</span>
+                      <span class="opt-content-text">Estate (夏天)</span>
+                    </label>
+                  
+                    <label class="mcq-option-label" data-opt-index="2">
+                      <input type="radio" name="q_mcq_1788803312193" value="2"  />
+                      <span class="opt-key-badge">C</span>
+                      <span class="opt-content-text">Tardo Autunno / Inizio Inverno (深秋/初冬)</span>
+                    </label>
+                  
+                    <label class="mcq-option-label" data-opt-index="3">
+                      <input type="radio" name="q_mcq_1788803312193" value="3"  />
+                      <span class="opt-key-badge">D</span>
+                      <span class="opt-content-text">Pieno Inverno (冬天)</span>
+                    </label>
+                  
+                </div>
+                <div class="mcq-feedback-panel ">
+                  <div class="feedback-indicator">
+                    <span class="indicator-icon">✓</span>
+                    <strong>Esito Risposta: Opzione C</strong>
+                  </div>
+                  <div class="feedback-explanation">**C** (Tardo autunno. I fiori sono appassiti, ma i frutti sono pronti).</div>
+                </div>
+              </div>
+            
+              <div class="mcq-item" data-question-id="mcq_1791477455349" data-correct="2">
+                <div class="mcq-question-title">
+                  <span class="mcq-index-tag">Domanda 2</span>
+                  <span class="mcq-question-text">Cosa rappresentano i &quot;rami che sfidano la brina&quot; (傲霜枝) del crisantemo?</span>
+                </div>
+                <div class="mcq-options-grid">
+                  
+                    <label class="mcq-option-label" data-opt-index="0">
+                      <input type="radio" name="q_mcq_1791477455349" value="0"  />
+                      <span class="opt-key-badge">A</span>
+                      <span class="opt-content-text">La debolezza della vecchiaia.</span>
+                    </label>
+                  
+                    <label class="mcq-option-label" data-opt-index="1">
+                      <input type="radio" name="q_mcq_1791477455349" value="1"  />
+                      <span class="opt-key-badge">B</span>
+                      <span class="opt-content-text">La bellezza dei fiori appena sbocciati.</span>
+                    </label>
+                  
+                    <label class="mcq-option-label" data-opt-index="2">
+                      <input type="radio" name="q_mcq_1791477455349" value="2"  />
+                      <span class="opt-key-badge">C</span>
+                      <span class="opt-content-text">La resilienza e la forza d&#039;animo nonostante le difficoltà.</span>
+                    </label>
+                  
+                    <label class="mcq-option-label" data-opt-index="3">
+                      <input type="radio" name="q_mcq_1791477455349" value="3"  />
+                      <span class="opt-key-badge">D</span>
+                      <span class="opt-content-text"> La tristezza della pioggia.</span>
+                    </label>
+                  
+                </div>
+                <div class="mcq-feedback-panel ">
+                  <div class="feedback-indicator">
+                    <span class="indicator-icon">✓</span>
+                    <strong>Esito Risposta: Opzione C</strong>
+                  </div>
+                  <div class="feedback-explanation">**C** (Il crisantemo che resiste al freddo è simbolo di integrità morale e forza).</div>
+                </div>
+              </div>
+            
+              <div class="mcq-item" data-question-id="mcq_1791477534054" data-correct="1">
+                <div class="mcq-question-title">
+                  <span class="mcq-index-tag">Domanda 3</span>
+                  <span class="mcq-question-text">Quali colori dominano l&#039;ultimo verso della poesia?</span>
+                </div>
+                <div class="mcq-options-grid">
+                  
+                    <label class="mcq-option-label" data-opt-index="0">
+                      <input type="radio" name="q_mcq_1791477534054" value="0"  />
+                      <span class="opt-key-badge">A</span>
+                      <span class="opt-content-text">Rosso e Blu</span>
+                    </label>
+                  
+                    <label class="mcq-option-label" data-opt-index="1">
+                      <input type="radio" name="q_mcq_1791477534054" value="1"  />
+                      <span class="opt-key-badge">B</span>
+                      <span class="opt-content-text">Giallo (arancio) e Verde</span>
+                    </label>
+                  
+                    <label class="mcq-option-label" data-opt-index="2">
+                      <input type="radio" name="q_mcq_1791477534054" value="2"  />
+                      <span class="opt-key-badge">C</span>
+                      <span class="opt-content-text">Bianco e Nero</span>
+                    </label>
+                  
+                    <label class="mcq-option-label" data-opt-index="3">
+                      <input type="radio" name="q_mcq_1791477534054" value="3"  />
+                      <span class="opt-key-badge">D</span>
+                      <span class="opt-content-text">Viola e Rosa</span>
+                    </label>
+                  
+                </div>
+                <div class="mcq-feedback-panel ">
+                  <div class="feedback-indicator">
+                    <span class="indicator-icon">✓</span>
+                    <strong>Esito Risposta: Opzione B</strong>
+                  </div>
+                  <div class="feedback-explanation">**B** (橙黄 - Giallo arancio, 橘绿 - Verde mandarino).</div>
+                </div>
+              </div>
+            
+          </div>
+
+          <div class="mcq-actions-toolbar no-print">
+            <button class="btn btn-mcq-check" onclick="checkAllMcqAnswers()">
+              <span>✓</span> Verifica Risposte
+            </button>
+            <button class="btn btn-mcq-reset" onclick="resetMcqAnswers()">
+              <span>↺</span> Reimposta
+            </button>
+            <span id="mcq-score-badge" class="mcq-score-badge" style="display:none;"></span>
+          </div>
+        </div>
+      </section>
+    
+
+      <!-- SESSION 3: OPEN QUESTIONS -->
+      
+      <section class="session-card session-open" id="session-open">
+        <div class="session-header-band open-band">
+          <div class="session-badge-pill open-badge">
+            <span class="badge-icon">✍️</span> PARTE 2 • DOMANDE A RISPOSTA APERTA
+          </div>
+          <h2 class="session-title">Domande di Riflessione e Sintesi</h2>
+          <p class="session-subtitle">Rispondi alle seguenti domande formulando risposte complete e chiare.</p>
+        </div>
+
+        <div class="session-body">
+          <div class="open-questions-list">
+            
+              <div class="open-q-card">
+                <div class="open-q-header">
+                  <span class="open-q-tag">Quesito 1</span>
+                  <div class="open-q-title-text"> Nel primo verso (**荷尽已无擎雨盖**), l&#039;autore dice che il loto è appassito e non ha più le foglie che fungono da &quot;ombrello&quot; per la pioggia. Quale sensazione vuole trasmettere riguardo al passare del tempo?</div>
+                </div>
+
+                <div class="open-q-notebook-field">
+                  <textarea class="notebook-textarea" placeholder="Scrivi qui la tua risposta..." rows="4"></textarea>
+                  
+                  <!-- Printable Notebook Ruled Lines -->
+                  <div class="notebook-print-lines">
+                    <div class="ruled-line"></div>
+                    <div class="ruled-line"></div>
+                    <div class="ruled-line"></div>
+                    <div class="ruled-line"></div>
+                  </div>
+                </div>
+
+                
+                  <div class="sample-model-wrapper ">
+                    <button type="button" class="btn-sample-toggle no-print" onclick="toggleSampleAnswer(this)">
+                      <span>💡 Mostra Risposta Modello (Docente)</span>
+                    </button>
+                    <div class="sample-model-box ">
+                      <div class="model-tag">Risposta modello / Guida didattica:</div>
+                      <p class="model-text">Vuole trasmettere un senso di fine di un ciclo (la giovinezza o l&#039;estate rigogliosa), preparando il lettore a una bellezza diversa, meno appariscente ma più solida.</p>
+                    </div>
+                  </div>
+                
+              </div>
+            
+              <div class="open-q-card">
+                <div class="open-q-header">
+                  <span class="open-q-tag">Quesito 2</span>
+                  <div class="open-q-title-text">  C&#039;è un contrasto tra i primi due versi e gli ultimi due. Sapresti spiegare in cosa consiste?</div>
+                </div>
+
+                <div class="open-q-notebook-field">
+                  <textarea class="notebook-textarea" placeholder="Scrivi qui la tua risposta..." rows="4"></textarea>
+                  
+                  <!-- Printable Notebook Ruled Lines -->
+                  <div class="notebook-print-lines">
+                    <div class="ruled-line"></div>
+                    <div class="ruled-line"></div>
+                    <div class="ruled-line"></div>
+                    <div class="ruled-line"></div>
+                  </div>
+                </div>
+
+                
+                  <div class="sample-model-wrapper ">
+                    <button type="button" class="btn-sample-toggle no-print" onclick="toggleSampleAnswer(this)">
+                      <span>💡 Mostra Risposta Modello (Docente)</span>
+                    </button>
+                    <div class="sample-model-box ">
+                      <div class="model-tag">Risposta modello / Guida didattica:</div>
+                      <p class="model-text">Perché è il tempo del raccolto e della maturità. Nonostante il freddo, la natura offre frutti nutrienti e colorati; è un&#039;esortazione a guardare ciò che si è costruito (i frutti) invece di piangere ciò che si è perso (i fiori)</p>
+                    </div>
+                  </div>
+                
+              </div>
+            
+              <div class="open-q-card">
+                <div class="open-q-header">
+                  <span class="open-q-tag">Quesito 3</span>
+                  <div class="open-q-title-text">**Il futuro:** Cosa spera di fare il protagonista una volta diventato grande (长大)?</div>
+                </div>
+
+                <div class="open-q-notebook-field">
+                  <textarea class="notebook-textarea" placeholder="Scrivi qui la tua risposta..." rows="4"></textarea>
+                  
+                  <!-- Printable Notebook Ruled Lines -->
+                  <div class="notebook-print-lines">
+                    <div class="ruled-line"></div>
+                    <div class="ruled-line"></div>
+                    <div class="ruled-line"></div>
+                    <div class="ruled-line"></div>
+                  </div>
+                </div>
+
+                
+                  <div class="sample-model-wrapper ">
+                    <button type="button" class="btn-sample-toggle no-print" onclick="toggleSampleAnswer(this)">
+                      <span>💡 Mostra Risposta Modello (Docente)</span>
+                    </button>
+                    <div class="sample-model-box ">
+                      <div class="model-tag">Risposta modello / Guida didattica:</div>
+                      <p class="model-text">I primi due versi parlano di ciò che è &quot;finito&quot; o &quot;appassito&quot; (loto, crisantemo), con un tono un po&#039; malinconico. Gli ultimi due invertono la rotta, diventando solari, vibranti e positivi.</p>
+                    </div>
+                  </div>
+                
+              </div>
+            
+          </div>
+        </div>
+      </section>
+    
+
+      <!-- SESSION 4: SUMMARY TASK -->
+      
+      <section class="session-card session-summary" id="session-summary">
+        <div class="session-header-band summary-band">
+          <div class="session-badge-pill summary-badge">
+            <span class="badge-icon">📝</span> PARTE 3 • COMPITO DI RIASSUNTO / TESTO LIBERO
+          </div>
+          <h2 class="session-title">Esercizio di Produzione Scritta e Sintesi</h2>
+          <p class="session-subtitle">Elabora un piccolo riassunto personale in base al brano letto rispettando la lunghezza raccomandata.</p>
+        </div>
+
+        <div class="session-body">
+          <!-- Writing Prompt Notice -->
+          <div class="summary-prompt-card">
+            <div class="prompt-icon-badge">📌</div>
+            <div class="prompt-details">
+              <h3 class="prompt-title">Consegna di Scrittura:</h3>
+              <p class="prompt-desc">**Traccia A (Parafrasi creativa):** Prova a riscrivere il significato della poesia con parole tue, come se dovessi spiegarla a un amico che non conosce il cinese. Concentrati sul messaggio di speranza che Su Shi vuole dare.
+</p>
+              
+              <div class="prompt-requirements">
+                <span class="req-chip">🎯 Lunghezza raccomandata: <strong>40 - 80 caratteri</strong></span>
+                <span class="req-chip">📐 Tipologia: Testo continuo di sintesi</span>
+              </div>
+            </div>
+          </div>
+
+          
+            <div class="summary-keypoints-card">
+              <div class="keypoints-title">Punti chiave da includere nel testo:</div>
+              <ul class="keypoints-list">
+                <li>Idea centrale</li><li>Contesto e dettagli</li><li>Conclusione</li>
+              </ul>
+            </div>
+          
+
+          <!-- Student Notebook Writing Area -->
+          <div class="notebook-writing-area">
+            <div class="notebook-area-header">
+              <label for="student-summary-input" class="notebook-label">
+                <span class="pen-icon">✍️</span> Foglio del Quaderno per la Scrittura:
+              </label>
+              <div class="unit-counter-badge no-print" id="unit-counter">
+                <span>Conteggio: </span>
+                <span id="counter-value" class="counter-number">0</span>
+                <span class="counter-unit">caratteri</span>
+                <span id="counter-status" class="counter-status-pill"></span>
+              </div>
+            </div>
+
+            <textarea 
+              id="student-summary-input" 
+              class="summary-notebook-textarea" 
+              rows="8" 
+              placeholder="Inizia a scrivere qui il tuo riassunto..." 
+              oninput="updateSummaryCounter()"></textarea>
+
+            <!-- Printable Ruled Notebook Lines -->
+            <div class="notebook-print-lines summary-print-lines">
+              <div class="ruled-line"></div><div class="ruled-line"></div><div class="ruled-line"></div><div class="ruled-line"></div><div class="ruled-line"></div><div class="ruled-line"></div><div class="ruled-line"></div><div class="ruled-line"></div><div class="ruled-line"></div>
+            </div>
+          </div>
+
+          
+            <div class="sample-model-wrapper " style="margin-top: 20px;">
+              <button type="button" class="btn-sample-toggle no-print" onclick="toggleSampleAnswer(this)">
+                <span>⭐ Mostra Esempio di Riassunto Modello</span>
+              </button>
+              <div class="sample-model-box summary-model ">
+                <div class="model-tag">Esempio di riassunto modello ottimale:</div>
+                <div class="model-summary-content">Esempio di riassunto modello...</div>
+              </div>
+            </div>
+          
+
+          
+            <div class="rubric-container">
+              <div class="rubric-header">Criteri di Valutazione per il Docente:</div>
+              <div class="rubric-grid">
+                
+                  <div class="rubric-card">
+                    <span class="rubric-num">#1</span>
+                    <span class="rubric-text">Pertinenza con il testo</span>
+                  </div>
+                
+                  <div class="rubric-card">
+                    <span class="rubric-num">#2</span>
+                    <span class="rubric-text">Accuratezza grammaticale</span>
+                  </div>
+                
+                  <div class="rubric-card">
+                    <span class="rubric-num">#3</span>
+                    <span class="rubric-text">Capacità di sintesi</span>
+                  </div>
+                
+              </div>
+            </div>
+          
+        </div>
+      </section>
+    
+
+      <!-- SESSION 5: VOCABULARY & GRAMMAR -->
+      
+    </main>
+  </div>
+
+  <script>
+    const EXERCISE_DATA = {"targetText":"荷尽已无擎雨盖,\n菊残犹有傲霜枝。\n一年好景君须记\n最是橙黄橘绿时。","langCode":"zh-CN","mcqCount":3,"unitType":"caratteri","minUnits":40,"maxUnits":80};
+    let isSpeaking = false;
+    let isLargeFont = false;
+    let isRubyVisible = true;
+
+    // 1. Ruby Pinyin Interactive Toggle
+    function toggleRubyPinyin() {
+      const passage = document.getElementById('reading-passage-text');
+      const topLabel = document.getElementById('ruby-btn-label');
+      const innerLabel = document.getElementById('ruby-inner-label');
+      if (!passage) return;
+
+      isRubyVisible = !isRubyVisible;
+
+      if (isRubyVisible) {
+        passage.classList.remove('hide-ruby');
+        if (topLabel) topLabel.textContent = 'Pinyin Ruby: ATTIVO';
+        if (innerLabel) innerLabel.textContent = 'Nascondi Pinyin';
+      } else {
+        passage.classList.add('hide-ruby');
+        if (topLabel) topLabel.textContent = 'Pinyin Ruby: NASCOSTO';
+        if (innerLabel) innerLabel.textContent = 'Mostra Pinyin Ruby';
+      }
+    }
+
+    // 2. Speech Synthesis
+    function toggleAudioSpeech() {
+      if (!('speechSynthesis' in window)) {
+        alert('Il sintetizzatore vocale non è supportato in questo browser.');
+        return;
+      }
+      const synth = window.speechSynthesis;
+      const topLabel = document.getElementById('audio-label');
+      const readingLabel = document.getElementById('audio-reading-label');
+      const icon = document.getElementById('audio-icon');
+
+      const setSpeakingState = (speaking) => {
+        isSpeaking = speaking;
+        if (topLabel) topLabel.textContent = speaking ? 'Interrompi' : 'Ascolta Testo';
+        if (readingLabel) readingLabel.textContent = speaking ? 'Interrompi' : 'Ascolta';
+        if (icon) icon.textContent = speaking ? '⏹️' : '🔊';
+      };
+
+      if (isSpeaking) {
+        synth.cancel();
+        setSpeakingState(false);
+        return;
+      }
+
+      synth.cancel();
+      const utterance = new SpeechSynthesisUtterance(EXERCISE_DATA.targetText);
+      utterance.lang = EXERCISE_DATA.langCode;
+      utterance.rate = 0.85;
+
+      utterance.onend = () => setSpeakingState(false);
+      utterance.onerror = () => setSpeakingState(false);
+
+      synth.speak(utterance);
+      setSpeakingState(true);
+    }
+
+    // 3. Zoom Font Size
+    function toggleTextFontSize() {
+      const textEl = document.getElementById('reading-passage-text');
+      if (!textEl) return;
+      isLargeFont = !isLargeFont;
+      if (isLargeFont) {
+        textEl.classList.add('large-text');
+      } else {
+        textEl.classList.remove('large-text');
+      }
+    }
+
+    // 4. Translation Toggle
+    function toggleTranslationBox() {
+      const box = document.getElementById('translation-callout');
+      const btn = document.getElementById('trans-btn-label');
+      if (!box) return;
+      const isHidden = box.style.display === 'none';
+      box.style.display = isHidden ? 'block' : 'none';
+      if (btn) btn.textContent = isHidden ? 'Nascondi Traduzione' : 'Traduzione';
+    }
+
+    // 5. Toggle Sample Answers
+    function toggleSampleAnswer(btn) {
+      const parent = btn.closest('.sample-model-wrapper');
+      if (parent) {
+        const box = parent.querySelector('.sample-model-box');
+        if (box) {
+          box.classList.toggle('show');
+        }
+      }
+    }
+
+    // 6. MCQ Checker
+    function checkAllMcqAnswers() {
+      const items = document.querySelectorAll('.mcq-item');
+      let score = 0;
+      let total = items.length;
+
+      items.forEach((item) => {
+        const correctIndex = parseInt(item.getAttribute('data-correct') || '0', 10);
+        const selectedRadio = item.querySelector('input[type="radio"]:checked');
+        const feedback = item.querySelector('.mcq-feedback-panel');
+
+        if (feedback) {
+          feedback.classList.add('visible');
+          if (selectedRadio && parseInt(selectedRadio.value, 10) === correctIndex) {
+            score++;
+            feedback.className = 'mcq-feedback-panel visible correct-state';
+            const icon = feedback.querySelector('.indicator-icon');
+            if (icon) icon.textContent = '✓';
+          } else {
+            feedback.className = 'mcq-feedback-panel visible incorrect-state';
+            const icon = feedback.querySelector('.indicator-icon');
+            if (icon) icon.textContent = '✗';
+          }
+        }
+      });
+
+      const scoreBadge = document.getElementById('mcq-score-badge');
+      if (scoreBadge) {
+        scoreBadge.style.display = 'inline-block';
+        scoreBadge.textContent = '🎯 Punteggio: ' + score + ' / ' + total + ' (' + Math.round((score / total) * 100) + '%)';
+      }
+    }
+
+    function resetMcqAnswers() {
+      const radios = document.querySelectorAll('.mcq-options-grid input[type="radio"]');
+      radios.forEach((r) => (r.checked = false));
+
+      const feedbacks = document.querySelectorAll('.mcq-feedback-panel');
+      feedbacks.forEach((f) => {
+        f.className = 'mcq-feedback-panel';
+      });
+
+      const scoreBadge = document.getElementById('mcq-score-badge');
+      if (scoreBadge) scoreBadge.style.display = 'none';
+    }
+
+    // 7. Live Summary Unit Counter
+    function updateSummaryCounter() {
+      const input = document.getElementById('student-summary-input');
+      const counterVal = document.getElementById('counter-value');
+      const statusTag = document.getElementById('counter-status');
+      if (!input || !counterVal) return;
+
+      const text = input.value.trim();
+      let count = 0;
+
+      if (EXERCISE_DATA.unitType === 'caratteri') {
+        count = text.replace(/\s+/g, '').length;
+      } else {
+        count = text ? text.split(/\s+/).filter(Boolean).length : 0;
+      }
+
+      counterVal.textContent = count;
+
+      if (statusTag && EXERCISE_DATA.minUnits > 0) {
+        if (count === 0) {
+          statusTag.textContent = '';
+          statusTag.className = 'counter-status-pill';
+        } else if (count < EXERCISE_DATA.minUnits) {
+          statusTag.textContent = 'Troppo breve (min. ' + EXERCISE_DATA.minUnits + ')';
+          statusTag.className = 'counter-status-pill status-short';
+        } else if (EXERCISE_DATA.maxUnits > 0 && count > EXERCISE_DATA.maxUnits) {
+          statusTag.textContent = 'Supera il limite (max. ' + EXERCISE_DATA.maxUnits + ')';
+          statusTag.className = 'counter-status-pill status-long';
+        } else {
+          statusTag.textContent = '✓ Lunghezza ideale';
+          statusTag.className = 'counter-status-pill status-ok';
+        }
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      updateSummaryCounter();
+    });
+  </script>
+</body>
+</html>
